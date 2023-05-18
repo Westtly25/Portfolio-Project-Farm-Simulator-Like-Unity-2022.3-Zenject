@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1045 &1
+EditorBuildSettings:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/PersistentScene.unity
+    guid: 0ef9bcf861dca7f4c800cf288d41874e
+  - enabled: 1
+    path: Assets/Scenes/Scene1_Farm.unity
+    guid: d32ec1053ae4a0b4c95b7fcda47a0f03
+  - enabled: 1
+    path: Assets/Scenes/Scene2_Field.unity
+    guid: 94ef71ec7852d7446a2b84c4c229e74d
+  - enabled: 1
+    path: Assets/Scenes/Scene3_Cabin.unity
+    guid: a0e498a3b7507fb4c8ad79e685e6a56c
+  m_configObjects:
+    com.unity.addressableassets: {fileID: 11400000, guid: ccf852dcb3bed254cad416118fcdeeac,
+      type: 2}
+    com.unity.input.settings: {fileID: 11400000, guid: 82bcfc30eff6d3d49a7532a33b7042a2,
+      type: 2}
+    com.unity.localization.settings: {fileID: 11400000, guid: 556f4d689986b0d49af7ffa6c46ef5d0,
+      type: 2}
