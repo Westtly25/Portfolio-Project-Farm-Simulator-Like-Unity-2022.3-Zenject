@@ -1,15 +1,27 @@
-﻿using UnityEngine;
-using Zenject;
+﻿using Zenject;
+using UnityEngine;
+
+public class ItemPickUpFactory
+{
+
+    [Inject]
+    public ItemPickUpFactory()
+    {
+        
+    }
+}
 
 public class ItemPickUp : MonoBehaviour
 {
     [Header("Injected Components")]
     private IInventoryManager inventoryManager;
+    private AudioService audioService;
 
     [Inject]
-    public void Constructor(IInventoryManager inventoryManager)
+    public void Constructor(IInventoryManager inventoryManager, AudioService audioService)
     {
         this.inventoryManager = inventoryManager;
+        this.audioService = audioService;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -24,7 +36,7 @@ public class ItemPickUp : MonoBehaviour
             {
                 inventoryManager.AddItem(InventoryLocation.player, item, collision.gameObject);
 
-                AudioManager.Instance.PlaySound(SoundName.effectPickupSound);
+                audioService.PlaySound(SoundName.effectPickupSound);
             }
         }
     }

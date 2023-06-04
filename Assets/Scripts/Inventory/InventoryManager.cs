@@ -1,9 +1,8 @@
-﻿using System;
+using System;
 using Zenject;
 using UnityEngine;
 using System.Collections.Generic;
 
-[Serializable]
 public class InventoryManager : IInventoryManager, ISaveable, IInitializable, IDisposable
 {
     private Dictionary<int, ItemDetails> itemDetailsDictionary;
@@ -97,7 +96,7 @@ public class InventoryManager : IInventoryManager, ISaveable, IInitializable, ID
             itemDetailsDictionary.Add(itemDetails.ItemCode, itemDetails);
         }
     }
-   
+
     public void AddItem(InventoryLocation inventoryLocation, Item item, GameObject gameObjectToDelete)
     {
         AddItem(inventoryLocation, item);
@@ -335,7 +334,7 @@ public class InventoryManager : IInventoryManager, ISaveable, IInitializable, ID
         // Nothing required here since the inventory manager is on a persistent scene;
     }
 
-   
+
     public void RemoveItem(InventoryLocation inventoryLocation, int itemCode)
     {
         List<InventoryItem> inventoryList = InventoryList[(int)inventoryLocation];
@@ -373,5 +372,4 @@ public class InventoryManager : IInventoryManager, ISaveable, IInitializable, ID
     {
         selectedInventoryItem[(int)inventoryLocation] = itemCode;
     }
-
 }

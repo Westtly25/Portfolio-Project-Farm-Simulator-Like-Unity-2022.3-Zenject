@@ -1,8 +1,6 @@
-﻿
-using System.Collections.Generic;
+﻿using UnityEditor;
 using UnityEngine;
-using UnityEditor;
-using System;
+using System.Collections.Generic;
 
 [CustomPropertyDrawer(typeof(ItemCodeDescriptionAttribute))]
 public class ItemCodeDescriptionDrawer : PropertyDrawer

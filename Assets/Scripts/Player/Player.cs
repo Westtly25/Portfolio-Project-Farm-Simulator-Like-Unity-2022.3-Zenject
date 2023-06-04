@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Zenject;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class Player : SingletonMonobehaviour<Player>, ISaveable
@@ -76,10 +77,19 @@ public class Player : SingletonMonobehaviour<Player>, ISaveable
     }
 
     private GameObjectSave gameObjectSave;
+
     public GameObjectSave GameObjectSave
     {
         get => gameObjectSave;
         set => gameObjectSave = value;
+    }
+
+    private readonly AudioService audioService;
+
+    [Inject]
+    public Player(AudioService audioService)
+    {
+        this.audioService = audioService;
     }
 
     protected override void Awake()
@@ -399,7 +409,7 @@ public class Player : SingletonMonobehaviour<Player>, ISaveable
             EventHandler.CallRemoveSelectedItemFromInventoryEvent();
 
             // Make planting sound
-            AudioManager.Instance.PlaySound(SoundName.effectPlantingSound);
+            audioService.PlaySound(SoundName.effectPlantingSound);
 
         }
 
@@ -468,7 +478,7 @@ public class Player : SingletonMonobehaviour<Player>, ISaveable
     private void HoeGroundAtCursor(GridPropertyDetails gridPropertyDetails, Vector3Int playerDirection)
     {
         //Play sound
-        AudioManager.Instance.PlaySound(SoundName.effectHoe);
+        audioService.PlaySound(SoundName.effectHoe);
 
         // Trigger animation
         StartCoroutine(HoeGroundAtCursorRoutine(playerDirection, gridPropertyDetails));
@@ -525,7 +535,7 @@ public class Player : SingletonMonobehaviour<Player>, ISaveable
     private void WaterGroundAtCursor(GridPropertyDetails gridPropertyDetails, Vector3Int playerDirection)
     {
         //Play sound
-        AudioManager.Instance.PlaySound(SoundName.effectWateringCan);
+        audioService.PlaySound(SoundName.effectWateringCan);
 
         // Trigger animation
         StartCoroutine(WaterGroundAtCursorRoutine(playerDirection, gridPropertyDetails));
@@ -584,7 +594,7 @@ public class Player : SingletonMonobehaviour<Player>, ISaveable
     private void ChopInPlayerDirection(GridPropertyDetails gridPropertyDetails, ItemDetails equippedItemDetails, Vector3Int playerDirection)
     {
         // Play sound
-        AudioManager.Instance.PlaySound(SoundName.effectAxe);
+        audioService.PlaySound(SoundName.effectAxe);
 
         // Trigger animation
         StartCoroutine(ChopInPlayerDirectionRoutine(gridPropertyDetails, equippedItemDetails, playerDirection));
@@ -613,7 +623,7 @@ public class Player : SingletonMonobehaviour<Player>, ISaveable
     private void CollectInPlayerDirection(GridPropertyDetails gridPropertyDetails, ItemDetails equippedItemDetails, Vector3Int playerDirection)
     {
         // Play sound
-        AudioManager.Instance.PlaySound(SoundName.effectBasket);
+        audioService.PlaySound(SoundName.effectBasket);
 
         StartCoroutine(CollectInPlayerDirectionRoutine(gridPropertyDetails, equippedItemDetails, playerDirection));
     }
@@ -635,7 +645,7 @@ public class Player : SingletonMonobehaviour<Player>, ISaveable
     private void BreakInPlayerDirection(GridPropertyDetails gridPropertyDetails, ItemDetails equippedItemDetails, Vector3Int playerDirection)
     {
         // Play sound
-        AudioManager.Instance.PlaySound(SoundName.effectPickaxe);
+        audioService.PlaySound(SoundName.effectPickaxe);
 
         StartCoroutine(BreakInPlayerDirectionRoutine(gridPropertyDetails, equippedItemDetails, playerDirection));
     }
@@ -741,7 +751,7 @@ public class Player : SingletonMonobehaviour<Player>, ISaveable
                         EventHandler.CallHarvestActionEffectEvent(effectPosition, HarvestActionEffect.reaping);
 
                         //Play sound
-                        AudioManager.Instance.PlaySound(SoundName.effectScythe);
+                        audioService.PlaySound(SoundName.effectScythe);
 
                         Destroy(itemArray[i].gameObject);
 

@@ -79,13 +79,9 @@ public class NPC : MonoBehaviour, ISaveable
 
                         }
                     }
-
                     npcMovement.CancelNPCMovement();
-
                 }
-
             }
-
         }
     }
 

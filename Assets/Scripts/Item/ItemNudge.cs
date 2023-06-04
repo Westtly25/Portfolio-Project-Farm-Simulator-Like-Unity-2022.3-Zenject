@@ -1,10 +1,19 @@
-﻿using System.Collections;
+﻿using Zenject;
 using UnityEngine;
+using System.Collections;
 
 public class ItemNudge : MonoBehaviour
 {
     private WaitForSeconds pause;
     private bool isAnimating = false;
+
+    private AudioService audioService;
+
+    [Inject]
+    public void Construct(AudioService audioService)
+    {
+        this.audioService = audioService;
+    }
 
     private void Awake()
     {
@@ -27,7 +36,7 @@ public class ItemNudge : MonoBehaviour
             //Play rustle sound if player
             if (collision.gameObject.tag == "Player")
             {
-                AudioManager.Instance.PlaySound(SoundName.effectRustle);
+                audioService.PlaySound(SoundName.effectRustle);
             }
         }
     }
@@ -48,9 +57,8 @@ public class ItemNudge : MonoBehaviour
             //Play rustle sound if player
             if (collision.gameObject.tag == "Player")
             {
-                AudioManager.Instance.PlaySound(SoundName.effectRustle);
+                audioService.PlaySound(SoundName.effectRustle);
             }
-
         }
     }
 

@@ -17,13 +17,14 @@ public class Crop : MonoBehaviour
 
     [Header("Injected Components")]
     private IInventoryManager inventoryManager;
+    private AudioService audioService;
 
     [Inject]
-    public void Constructor(IInventoryManager inventoryManager)
+    public void Constructor(IInventoryManager inventoryManager, AudioService audioService)
     {
         this.inventoryManager = inventoryManager;
+        this.audioService = audioService;
     }
-
 
     public void ProcessToolAction(ItemDetails equippedItemDetails, bool isToolRight, bool isToolLeft, bool isToolDown, bool isToolUp)
     {
@@ -72,7 +73,9 @@ public class Crop : MonoBehaviour
         }
     }
 
-    private void HarvestCrop(bool isUsingToolRight, bool isUsingToolUp, CropDetails cropDetails, GridPropertyDetails gridPropertyDetails, Animator animator)
+    private void HarvestCrop(bool isUsingToolRight, bool isUsingToolUp,
+                             CropDetails cropDetails, GridPropertyDetails gridPropertyDetails,
+                             Animator animator)
     {
 
         if (cropDetails.isHarvestedAnimation && animator != null)
@@ -97,9 +100,8 @@ public class Crop : MonoBehaviour
 
         if (cropDetails.harvestSound != SoundName.none)
         {
-            AudioManager.Instance.PlaySound(cropDetails.harvestSound);
+            audioService.PlaySound(cropDetails.harvestSound);
         }
-
 
         gridPropertyDetails.seedItemCode = -1;
         gridPropertyDetails.growthDays = -1;

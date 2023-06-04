@@ -5,8 +5,6 @@ public class MovementAnimationParameterControl : MonoBehaviour
 {
     private Animator animator;
 
-    // Use this for initialisation
-
     private void Awake()
     {
         animator = GetComponent<Animator>();
@@ -84,6 +82,6 @@ public class MovementAnimationParameterControl : MonoBehaviour
 
     private void AnimationEventPlayFootstepSound()
     {
-        AudioManager.Instance.PlaySound(SoundName.effectFootstepHardGround);
+        //AudioService.Instance.PlaySound(SoundName.effectFootstepHardGround);
     }
 }
