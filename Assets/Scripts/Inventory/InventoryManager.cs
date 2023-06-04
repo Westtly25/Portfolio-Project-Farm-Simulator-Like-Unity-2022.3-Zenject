@@ -27,7 +27,8 @@ public class InventoryManager : IInventoryManager, ISaveable, IInitializable, ID
         private set => inventoryListCapacityIntArray = value;
     }
 
-    [SerializeField] private SO_ItemList itemList = null;
+    [SerializeField]
+    private SO_ItemList itemList = null;
 
     private string iSaveableUniqueID;
     public string ISaveableUniqueID
