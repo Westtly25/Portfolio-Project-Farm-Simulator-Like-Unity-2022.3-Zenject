@@ -6,10 +6,7 @@
 
         public bool IsActive { get; set; }
 
-        public State()
-        {
-
-        }
+        public State() { }
 
         public State(StateMachine stateMachine)
         {

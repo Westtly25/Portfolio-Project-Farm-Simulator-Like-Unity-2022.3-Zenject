@@ -11,15 +11,13 @@ namespace Assets.Scripts.Architecture.State_System
         public State CurrentState { get; private set; }
         public Transition CurrentTransition { get; private set; }
 
-        private readonly HashSet<State> _states = new(16);
-        private readonly List<Transition> _anyTransitions = new(16);
-        private readonly List<Transition> _transitions = new(16);
+        private readonly HashSet<State> _states = new(6);
+        private readonly List<Transition> _anyTransitions = new(6);
+        private readonly List<Transition> _transitions = new(6);
 
         private bool _isStatesAdded;
 
-        public StateMachine()
-        {
-        }
+        public StateMachine() { }
 
         public void AddStates(params State[] states)
         {

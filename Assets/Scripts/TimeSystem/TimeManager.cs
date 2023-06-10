@@ -171,31 +171,6 @@ public class TimeManager : SingletonMonobehaviour<TimeManager>, ISaveable
     public TimeSpan GetGameTime() =>
         new TimeSpan(gameHour, gameMinute, gameSecond);
 
-
-    //TODO:Remove
-    /// <summary>
-    /// Advance 1 game minute
-    /// </summary>
-    public void TestAdvanceGameMinute()
-    {
-        for (int i = 0; i < 60; i++)
-        {
-            UpdateGameSecond();
-        }
-    }
-
-    //TODO:Remove
-    /// <summary>
-    /// Advance 1 day
-    /// </summary>
-    public void TestAdvanceGameDay()
-    {
-        for (int i = 0; i < 86400; i++)
-        {
-            UpdateGameSecond();
-        }
-    }
-
     public void ISaveableRegister()
     {
         SaveLoadManager.Instance.iSaveableObjectList.Add(this);
@@ -208,30 +183,23 @@ public class TimeManager : SingletonMonobehaviour<TimeManager>, ISaveable
 
     public GameObjectSave ISaveableSave()
     {
-        // Delete existing scene save if exists
         GameObjectSave.sceneData.Remove(Settings.PersistentScene);
 
-        // Create new scene save
         SceneSave sceneSave = new SceneSave();
 
-        // Create new int dictionary
         sceneSave.intDictionary = new Dictionary<string, int>();
 
-        // Create new string dictionary
         sceneSave.stringDictionary = new Dictionary<string, string>();
 
-        // Add values to the int dictionary
         sceneSave.intDictionary.Add("gameYear", gameYear);
         sceneSave.intDictionary.Add("gameDay", gameDay);
         sceneSave.intDictionary.Add("gameHour", gameHour);
         sceneSave.intDictionary.Add("gameMinute", gameMinute);
         sceneSave.intDictionary.Add("gameSecond", gameSecond);
 
-        // Add values to the string dictionary
         sceneSave.stringDictionary.Add("gameDayOfWeek", gameDayOfWeek);
         sceneSave.stringDictionary.Add("gameSeason", gameSeason.ToString());
 
-        // Add scene save to game object for persistent scene
         GameObjectSave.sceneData.Add(Settings.PersistentScene, sceneSave);
 
         return GameObjectSave;
@@ -239,18 +207,14 @@ public class TimeManager : SingletonMonobehaviour<TimeManager>, ISaveable
 
     public void ISaveableLoad(GameSave gameSave)
     {
-        // Get saved gameobject from gameSave data
         if (gameSave.gameObjectData.TryGetValue(ISaveableUniqueID, out GameObjectSave gameObjectSave))
         {
             GameObjectSave = gameObjectSave;
 
-            // Get savedscene data for gameObject
             if (GameObjectSave.sceneData.TryGetValue(Settings.PersistentScene, out SceneSave sceneSave))
             {
-                // if int and string dictionaries are found
                 if (sceneSave.intDictionary != null && sceneSave.stringDictionary != null)
                 {
-                    // populate saved int values
                     if (sceneSave.intDictionary.TryGetValue("gameYear", out int savedGameYear))
                         gameYear = savedGameYear;
 
@@ -266,7 +230,6 @@ public class TimeManager : SingletonMonobehaviour<TimeManager>, ISaveable
                     if (sceneSave.intDictionary.TryGetValue("gameSecond", out int savedGameSecond))
                         gameSecond = savedGameSecond;
 
-                    // populate string saved values
                     if (sceneSave.stringDictionary.TryGetValue("gameDayOfWeek", out string savedGameDayOfWeek))
                         gameDayOfWeek = savedGameDayOfWeek;
 
@@ -278,24 +241,18 @@ public class TimeManager : SingletonMonobehaviour<TimeManager>, ISaveable
                         }
                     }
 
-                    // Zero gametick
                     gameTick = 0f;
 
-                    // Trigger advance minute event
                     EventHandler.CallAdvanceGameMinuteEvent(gameYear, gameSeason, gameDay, gameDayOfWeek, gameHour, gameMinute, gameSecond);
-
-                    // Refresh game clock
                 }
             }
         }
     }
     public void ISaveableStoreScene(string sceneName)
     {
-        // Nothing required here since Time Manager is running on the persistent scene
     }
 
     public void ISaveableRestoreScene(string sceneName)
     {
-        // Nothing required here since Time Manager is running on the persistent scene
     }
 }

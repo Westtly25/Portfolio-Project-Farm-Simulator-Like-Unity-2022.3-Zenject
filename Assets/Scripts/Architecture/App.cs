@@ -15,9 +15,28 @@ namespace Assets.Scripts.Architecture
         private void Start() =>
             Initialize();
 
-        public void Initialize()
+        private void Update()
         {
-
+            globalStateMachine.Run();
         }
+
+        private void Initialize()
+        {
+            State[] states = new State[]
+            {
+                new LoadProgressState(),
+                new LoadSceneState()
+            };
+        }
+    }
+
+    public class LoadProgressState : State
+    {
+
+    }
+
+    public class LoadSceneState : State
+    {
+
     }
 }
