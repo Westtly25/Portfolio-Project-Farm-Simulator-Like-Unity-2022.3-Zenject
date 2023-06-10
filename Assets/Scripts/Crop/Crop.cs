@@ -73,8 +73,10 @@ public class Crop : MonoBehaviour
         }
     }
 
-    private void HarvestCrop(bool isUsingToolRight, bool isUsingToolUp,
-                             CropDetails cropDetails, GridPropertyDetails gridPropertyDetails,
+    private void HarvestCrop(bool isUsingToolRight,
+                             bool isUsingToolUp,
+                             CropDetails cropDetails,
+                             GridPropertyDetails gridPropertyDetails,
                              Animator animator)
     {
 

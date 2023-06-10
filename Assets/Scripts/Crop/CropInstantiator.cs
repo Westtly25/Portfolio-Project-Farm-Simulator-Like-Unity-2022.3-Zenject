@@ -14,7 +14,6 @@ public class CropInstantiator : MonoBehaviour
     [SerializeField] private int seedItemCode = 0;
     [SerializeField] private int growthDays = 0;
 
-
     private void OnDisable()
     {
         EventHandler.InstantiateCropPrefabsEvent -= InstantiateCropPrefabs;

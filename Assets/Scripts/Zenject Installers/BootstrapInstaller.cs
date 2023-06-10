@@ -1,6 +1,7 @@
 ﻿using Zenject;
 using Assets.Scripts.Player;
 using Assets.Scripts.Input_System;
+using Assets.Scripts.Architecture.AssetsManagment;
 
 namespace Assets.Scripts.Zenject_Installers
 {
@@ -8,6 +9,11 @@ namespace Assets.Scripts.Zenject_Installers
     {
         public override void InstallBindings()
         {
+            Container.Bind<AssetProvider>()
+                     .FromNew()
+                     .AsSingle()
+                     .NonLazy();
+
             Container.Bind<InputService>()
                      .FromNew()
                      .AsSingle()

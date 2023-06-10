@@ -1,4 +1,4 @@
-﻿public enum HarvestActionEffect
+﻿public enum HarvestActionEffect : byte
 {
     deciduousLeavesFalling,
     pineConesFalling,

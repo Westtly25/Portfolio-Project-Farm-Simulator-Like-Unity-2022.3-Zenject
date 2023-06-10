@@ -1,6 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using UnityEngine;
+using System.Collections.Generic;
 
 public class TimeManager : SingletonMonobehaviour<TimeManager>, ISaveable
 {
@@ -155,40 +155,21 @@ public class TimeManager : SingletonMonobehaviour<TimeManager>, ISaveable
         int totalDays = (((int)gameSeason) * 30) + gameDay;
         int dayOfWeek = totalDays % 7;
 
-        switch (dayOfWeek)
+        return dayOfWeek switch
         {
-            case 1:
-                return "Mon";
-
-            case 2:
-                return "Tue";
-
-            case 3:
-                return "Wed";
-
-            case 4:
-                return "Thu";
-
-            case 5:
-                return "Fri";
-
-            case 6:
-                return "Sat";
-
-            case 0:
-                return "Sun";
-
-            default:
-                return "";
-        }
+            1 => "Mon",
+            2 => "Tue",
+            3 => "Wed",
+            4 => "Thu",
+            5 => "Fri",
+            6 => "Sat",
+            0 => "Sun",
+            _ => "",
+        };
     }
 
-    public TimeSpan GetGameTime()
-    {
-        TimeSpan gameTime = new TimeSpan(gameHour, gameMinute, gameSecond);
-
-        return gameTime;
-    }
+    public TimeSpan GetGameTime() =>
+        new TimeSpan(gameHour, gameMinute, gameSecond);
 
 
     //TODO:Remove

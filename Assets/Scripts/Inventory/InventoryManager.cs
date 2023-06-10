@@ -28,7 +28,7 @@ public class InventoryManager : IInventoryManager, ISaveable, IInitializable, ID
     }
 
     [SerializeField]
-    private SO_ItemList itemList = null;
+    private ItemListScriptableObject itemList = null;
 
     private string iSaveableUniqueID;
     public string ISaveableUniqueID

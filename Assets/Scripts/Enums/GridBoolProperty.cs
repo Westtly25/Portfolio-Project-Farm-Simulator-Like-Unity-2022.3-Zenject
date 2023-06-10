@@ -1,4 +1,4 @@
-﻿public enum GridBoolProperty
+﻿public enum GridBoolProperty : byte
 {
     diggable,
     canDropItem,

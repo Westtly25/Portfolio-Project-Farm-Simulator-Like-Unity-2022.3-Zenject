@@ -1,9 +1,9 @@
 ﻿using System;
+using Zenject;
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 using UnityEngine.SceneManagement;
-using Zenject;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class Player : SingletonMonobehaviour<Player>, ISaveable
@@ -14,7 +14,10 @@ public class Player : SingletonMonobehaviour<Player>, ISaveable
     private AnimationOverrides animationOverrides;
     private GridCursor gridCursor;
     private Cursor cursor;
-
+    /// <summary>
+    /// TODO
+    /// Create State machine to managed character states
+    /// </summary>
     // Movement Parameters
     private float xInput;
     private float yInput;

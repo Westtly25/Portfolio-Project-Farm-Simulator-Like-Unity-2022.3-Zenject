@@ -1,4 +1,4 @@
-﻿public enum PartVariantType
+﻿public enum PartVariantType : byte
 {
     none,
     carry,

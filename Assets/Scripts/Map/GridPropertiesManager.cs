@@ -604,10 +604,8 @@ public class GridPropertiesManager : SingletonMonobehaviour<GridPropertiesManage
     /// <summary>
     /// Get the grid property details for the tile at (gridX,gridY).  If no grid property details exist null is returned and can assume that all grid property details values are null or false
     /// </summary>
-    public GridPropertyDetails GetGridPropertyDetails(int gridX, int gridY)
-    {
-        return GetGridPropertyDetails(gridX, gridY, gridPropertyDictionary);
-    }
+    public GridPropertyDetails GetGridPropertyDetails(int gridX, int gridY) => 
+        GetGridPropertyDetails(gridX, gridY, gridPropertyDictionary);
 
     /// <summary>
     /// for sceneName this method returns a Vector2Int with the grid dimensions for that scene, or Vector2Int.zero if scene not found

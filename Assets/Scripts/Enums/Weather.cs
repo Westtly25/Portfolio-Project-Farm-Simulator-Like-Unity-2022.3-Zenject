@@ -1,4 +1,4 @@
-﻿public enum Weather
+﻿public enum Weather : byte
 {
     dry,
     raining,

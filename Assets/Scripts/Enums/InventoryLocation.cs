@@ -1,4 +1,4 @@
-﻿public enum InventoryLocation
+﻿public enum InventoryLocation : byte
 {
     player,
     chest,

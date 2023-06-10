@@ -1,8 +1,6 @@
-﻿using Assets.Scripts.Input_System;
+﻿using UnityEngine;
 using System.Collections.Generic;
-using UnityEngine;
 using UnityEngine.SceneManagement;
-using Zenject;
 
 [RequireComponent(typeof(AStar))]
 public class NPCManager : SingletonMonobehaviour<NPCManager>
@@ -101,21 +99,5 @@ public class NPCManager : SingletonMonobehaviour<NPCManager>
         {
             return false;
         }
-    }
-}
-
-public class NPCFactory : IFactory<Vector2Int, NPC>
-{
-    private readonly DiContainer container;
-
-    [Inject]
-    public NPCFactory(DiContainer container)
-    {
-        this.container = container;
-    }
-
-    public NPC Create(Vector2Int param)
-    {
-        throw new System.NotImplementedException();
     }
 }

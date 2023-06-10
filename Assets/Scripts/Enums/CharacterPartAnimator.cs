@@ -1,4 +1,4 @@
-﻿public enum CharacterPartAnimator
+﻿public enum CharacterPartAnimator : byte
 {
     body,
     arms,

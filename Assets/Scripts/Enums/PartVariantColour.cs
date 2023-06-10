@@ -1,4 +1,4 @@
-﻿public enum PartVariantColour
+﻿public enum PartVariantColour : byte
 {
     none,
     count

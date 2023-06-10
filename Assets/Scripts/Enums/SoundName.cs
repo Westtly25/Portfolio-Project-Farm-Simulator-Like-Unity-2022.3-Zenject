@@ -1,4 +1,4 @@
-﻿public enum SoundName
+﻿public enum SoundName : ushort
 {
     none = 0,
     effectFootstepSoftGround = 10,

@@ -1,4 +1,4 @@
-﻿public enum ToolEffect
+﻿public enum ToolEffect : byte
 {
     none,
     watering

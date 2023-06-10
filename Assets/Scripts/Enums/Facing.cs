@@ -1,4 +1,4 @@
-﻿public enum Facing
+﻿public enum Facing : byte
 {
     none,
     front,

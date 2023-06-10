@@ -1,6 +1,7 @@
 ﻿using Zenject;
 using UnityEngine;
 using Assets.Scripts.Architecture.State_System;
+using UnityEditor.Localization.Plugins.Google.Columns;
 
 namespace Assets.Scripts.Architecture
 {
@@ -8,12 +9,15 @@ namespace Assets.Scripts.Architecture
     {
         private StateMachine globalStateMachine = new StateMachine();
 
-        public void Constructor()
+        private void Awake() =>
+            DontDestroyOnLoad(this);
+
+        private void Start() =>
+            Initialize();
+
+        public void Initialize()
         {
 
         }
-
-        private void Awake() =>
-            DontDestroyOnLoad(this);
     }
 }
