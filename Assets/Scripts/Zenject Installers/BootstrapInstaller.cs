@@ -1,6 +1,7 @@
 ﻿using Zenject;
 using Assets.Scripts.Player;
 using Assets.Scripts.Input_System;
+using Assets.Scripts.Pause_System;
 using Assets.Scripts.Architecture.AssetsManagment;
 
 namespace Assets.Scripts.Zenject_Installers
@@ -15,6 +16,11 @@ namespace Assets.Scripts.Zenject_Installers
                      .NonLazy();
 
             Container.Bind<InputService>()
+                     .FromNew()
+                     .AsSingle()
+                     .NonLazy();
+
+            Container.BindInterfacesAndSelfTo<PauseHandler>()
                      .FromNew()
                      .AsSingle()
                      .NonLazy();

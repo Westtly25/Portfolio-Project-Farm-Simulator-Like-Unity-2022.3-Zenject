@@ -1,6 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using UnityEngine;
+using System.Collections.Generic;
 
 public delegate void MovementDelegate(float inputX, float inputY, bool isWalking, bool isRunning, bool isIdle, bool isCarrying, ToolEffect toolEffect,
     bool isUsingToolRight, bool isUsingToolLeft, bool isUsingToolUp, bool isUsingToolDown,
@@ -9,6 +9,12 @@ public delegate void MovementDelegate(float inputX, float inputY, bool isWalking
     bool isSwingingToolRight, bool isSwingingToolLeft, bool isSwingingToolUp, bool isSwingingToolDown,
     bool idleUp, bool idleDown, bool idleLeft, bool idleRight);
 
+
+/// <summary>
+/// TODO
+/// Remove Event Handler
+/// Only used for prototype
+/// </summary>
 public static class EventHandler
 {
     public static event Action DropSelectedItemEvent;

@@ -14,6 +14,7 @@ public class Player : SingletonMonobehaviour<Player>, ISaveable
     private AnimationOverrides animationOverrides;
     private GridCursor gridCursor;
     private Cursor cursor;
+
     /// <summary>
     /// TODO
     /// Create State machine to managed character states

@@ -2,6 +2,7 @@ using System;
 using Zenject;
 using UnityEngine;
 using System.Collections.Generic;
+using Unity.Collections;
 
 public class InventoryManager : IInventoryManager, ISaveable, IInitializable, IDisposable
 {
@@ -9,8 +10,8 @@ public class InventoryManager : IInventoryManager, ISaveable, IInitializable, ID
 
     private int[] selectedInventoryItem;
 
+    [ReadOnly]
     private List<InventoryItem>[] inventoryList;
-
 
     public List<InventoryItem>[] InventoryList
     {

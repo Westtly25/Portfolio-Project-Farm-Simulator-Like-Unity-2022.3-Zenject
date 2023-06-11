@@ -1,16 +1,6 @@
 ﻿using Zenject;
 using UnityEngine;
 
-public class ItemPickUpFactory
-{
-
-    [Inject]
-    public ItemPickUpFactory()
-    {
-        
-    }
-}
-
 public class ItemPickUp : MonoBehaviour
 {
     [Header("Injected Components")]

@@ -1,8 +1,21 @@
 ﻿using System;
+using Zenject;
 using UnityEngine;
 using System.Collections.Generic;
+using Assets.Scripts.Pause_System;
 
-public class TimeManager : SingletonMonobehaviour<TimeManager>, ISaveable
+public enum DayOfWeek : byte
+{
+    Mon,
+    Tue,
+    Wed,
+    Thu,
+    Fri,
+    Sat,
+    Sun
+}
+
+public class TimeManager : SingletonMonobehaviour<TimeManager>, ISaveable, IPauseListener, ITickable
 {
     private int gameYear = 1;
     private Season gameSeason = Season.Spring;
@@ -11,6 +24,8 @@ public class TimeManager : SingletonMonobehaviour<TimeManager>, ISaveable
     private int gameMinute = 30;
     private int gameSecond = 0;
     private string gameDayOfWeek = "Mon";
+
+    private DayOfWeek day;
 
     private bool gameClockPaused = false;
 
@@ -28,6 +43,19 @@ public class TimeManager : SingletonMonobehaviour<TimeManager>, ISaveable
     {
         get => gameObjectSave;
         set => gameObjectSave = value;
+    }
+
+    private readonly IPauseHandler pauseHandler;
+
+    [Inject]
+    public TimeManager(IPauseHandler pauseHandler)
+    {
+        this.pauseHandler = pauseHandler;
+    }
+
+    public void Initialized()
+    {
+
     }
 
     protected override void Awake()
@@ -72,6 +100,9 @@ public class TimeManager : SingletonMonobehaviour<TimeManager>, ISaveable
 
     private void Update()
     {
+        if (pauseHandler.IsPaused)
+            return;
+
         if (!gameClockPaused)
         {
             GameTick();
@@ -253,5 +284,17 @@ public class TimeManager : SingletonMonobehaviour<TimeManager>, ISaveable
 
     public void ISaveableRestoreScene(string sceneName)
     {
+    }
+
+    public void Pause(bool isPaused)
+    {
+    }
+
+    public void Tick()
+    {
+        if (pauseHandler.IsPaused)
+            return;
+
+            GameTick();
     }
 }

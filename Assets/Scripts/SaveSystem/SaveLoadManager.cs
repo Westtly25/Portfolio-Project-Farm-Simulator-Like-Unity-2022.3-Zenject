@@ -1,12 +1,11 @@
-﻿using System.Collections.Generic;
-using System.IO;
-using System.Runtime.Serialization.Formatters.Binary;
+﻿using System.IO;
 using UnityEngine;
+using System.Collections.Generic;
 using UnityEngine.SceneManagement;
+using System.Runtime.Serialization.Formatters.Binary;
 
 public class SaveLoadManager : SingletonMonobehaviour<SaveLoadManager>
 {
-
     public GameSave gameSave;
     public List<ISaveable> iSaveableObjectList;
 
@@ -29,14 +28,12 @@ public class SaveLoadManager : SingletonMonobehaviour<SaveLoadManager>
 
             gameSave = (GameSave)bf.Deserialize(file);
 
-            // loop through all ISaveable objects and apply save data
             for (int i = iSaveableObjectList.Count - 1; i > -1; i--)
             {
                 if (gameSave.gameObjectData.ContainsKey(iSaveableObjectList[i].ISaveableUniqueID))
                 {
                     iSaveableObjectList[i].ISaveableLoad(gameSave);
                 }
-                // else if iSaveableObject unique ID is not in the game object data then destroy object
                 else
                 {
                     Component component = (Component)iSaveableObjectList[i];
@@ -47,6 +44,8 @@ public class SaveLoadManager : SingletonMonobehaviour<SaveLoadManager>
             file.Close();
         }
 
+        //TODO
+        //Extract to View Service
         UIManager.Instance.DisablePauseMenu();
     }
 
@@ -54,7 +53,6 @@ public class SaveLoadManager : SingletonMonobehaviour<SaveLoadManager>
     {
         gameSave = new GameSave();
 
-        // loop through all ISaveable objects and generate save data
         foreach (ISaveable iSaveableObject in iSaveableObjectList)
         {
             gameSave.gameObjectData.Add(iSaveableObject.ISaveableUniqueID, iSaveableObject.ISaveableSave());
@@ -73,7 +71,6 @@ public class SaveLoadManager : SingletonMonobehaviour<SaveLoadManager>
 
     public void StoreCurrentSceneData()
     {
-        // loop through all ISaveable objects and trigger store scene data for each
         foreach (ISaveable iSaveableObject in iSaveableObjectList)
         {
             iSaveableObject.ISaveableStoreScene(SceneManager.GetActiveScene().name);
@@ -82,7 +79,6 @@ public class SaveLoadManager : SingletonMonobehaviour<SaveLoadManager>
 
     public void RestoreCurrentSceneData()
     {
-        // loop through all ISaveable objects and trigger restore scene data for each
         foreach (ISaveable iSaveableObject in iSaveableObjectList)
         {
             iSaveableObject.ISaveableRestoreScene(SceneManager.GetActiveScene().name);
