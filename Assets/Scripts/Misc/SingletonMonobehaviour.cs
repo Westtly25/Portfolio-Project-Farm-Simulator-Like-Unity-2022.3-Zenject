@@ -1,6 +1,10 @@
-﻿
-using UnityEngine;
+﻿using UnityEngine;
 
+/// <summary>
+/// TOD
+/// Remove because DI Zenject
+/// </summary>
+/// <typeparam name="T"></typeparam>
 public abstract class SingletonMonobehaviour<T> : MonoBehaviour where T:MonoBehaviour
 {
     private static T instance;

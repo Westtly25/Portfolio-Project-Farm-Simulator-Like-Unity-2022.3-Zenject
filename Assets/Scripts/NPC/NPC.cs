@@ -54,7 +54,7 @@ public class NPC : MonoBehaviour, ISaveable
         {
             GameObjectSave = gameObjectSave;
 
-            if (GameObjectSave.sceneData.TryGetValue(Settings.PersistentScene, out SceneSave sceneSave))
+            if (GameObjectSave.sceneData.TryGetValue(StaticData.PersistentScene, out SceneSave sceneSave))
             {
                 if (sceneSave.vector3Dictionary != null && sceneSave.stringDictionary != null)
                 {
@@ -96,7 +96,7 @@ public class NPC : MonoBehaviour, ISaveable
 
     public GameObjectSave ISaveableSave()
     {
-        GameObjectSave.sceneData.Remove(Settings.PersistentScene);
+        GameObjectSave.sceneData.Remove(StaticData.PersistentScene);
 
         SceneSave sceneSave = new SceneSave();
 
@@ -108,7 +108,7 @@ public class NPC : MonoBehaviour, ISaveable
         sceneSave.vector3Dictionary.Add("npcTargetWorldPosition", new Vector3Serializable(npcMovement.npcTargetWorldPosition.x, npcMovement.npcTargetWorldPosition.y, npcMovement.npcTargetWorldPosition.z));
         sceneSave.stringDictionary.Add("npcTargetScene", npcMovement.npcTargetScene.ToString());
 
-        GameObjectSave.sceneData.Add(Settings.PersistentScene, sceneSave);
+        GameObjectSave.sceneData.Add(StaticData.PersistentScene, sceneSave);
 
         return GameObjectSave;
     }

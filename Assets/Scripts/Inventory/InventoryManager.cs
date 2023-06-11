@@ -86,7 +86,7 @@ public class InventoryManager : IInventoryManager, ISaveable, IInitializable, ID
 
         InventoryListCapacityIntArray = new int[(int)InventoryLocation.count];
 
-        InventoryListCapacityIntArray[(int)InventoryLocation.player] = Settings.playerInitialInventoryCapacity;
+        InventoryListCapacityIntArray[(int)InventoryLocation.player] = StaticData.playerInitialInventoryCapacity;
     }
 
     private void CreateItemDetailsDictionary()
@@ -237,27 +237,27 @@ public class InventoryManager : IInventoryManager, ISaveable, IInitializable, ID
         switch (itemType)
         {
             case ItemType.Breaking_tool:
-                itemTypeDescription = Settings.BreakingTool;
+                itemTypeDescription = StaticData.BreakingTool;
                 break;
 
             case ItemType.Chopping_tool:
-                itemTypeDescription = Settings.ChoppingTool;
+                itemTypeDescription = StaticData.ChoppingTool;
                 break;
 
             case ItemType.Hoeing_tool:
-                itemTypeDescription = Settings.HoeingTool;
+                itemTypeDescription = StaticData.HoeingTool;
                 break;
 
             case ItemType.Reaping_tool:
-                itemTypeDescription = Settings.ReapingTool;
+                itemTypeDescription = StaticData.ReapingTool;
                 break;
 
             case ItemType.Watering_tool:
-                itemTypeDescription = Settings.WateringTool;
+                itemTypeDescription = StaticData.WateringTool;
                 break;
 
             case ItemType.Collecting_tool:
-                itemTypeDescription = Settings.CollectingTool;
+                itemTypeDescription = StaticData.CollectingTool;
                 break;
 
             default:
@@ -282,14 +282,14 @@ public class InventoryManager : IInventoryManager, ISaveable, IInitializable, ID
     {
         SceneSave sceneSave = new SceneSave();
 
-        GameObjectSave.sceneData.Remove(Settings.PersistentScene);
+        GameObjectSave.sceneData.Remove(StaticData.PersistentScene);
 
         sceneSave.listInvItemArray = InventoryList;
 
         sceneSave.intArrayDictionary = new Dictionary<string, int[]>();
         sceneSave.intArrayDictionary.Add("inventoryListCapacityArray", inventoryListCapacityIntArray);
 
-        GameObjectSave.sceneData.Add(Settings.PersistentScene, sceneSave);
+        GameObjectSave.sceneData.Add(StaticData.PersistentScene, sceneSave);
 
         return GameObjectSave;
     }
@@ -301,7 +301,7 @@ public class InventoryManager : IInventoryManager, ISaveable, IInitializable, ID
         {
             GameObjectSave = gameObjectSave;
 
-            if (gameObjectSave.sceneData.TryGetValue(Settings.PersistentScene, out SceneSave sceneSave))
+            if (gameObjectSave.sceneData.TryGetValue(StaticData.PersistentScene, out SceneSave sceneSave))
             {
                 if (sceneSave.listInvItemArray != null)
                 {

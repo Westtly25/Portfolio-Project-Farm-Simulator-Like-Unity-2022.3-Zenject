@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public static class Settings 
+public static class StaticData 
 {
     // Scenes
     public const string PersistentScene = "PersistentScene";
@@ -91,7 +91,7 @@ public static class Settings
 
 
     // static constructor
-    static Settings()
+    static StaticData()
     {
         // NPC Animation parameters
         walkUp = Animator.StringToHash("walkUp");

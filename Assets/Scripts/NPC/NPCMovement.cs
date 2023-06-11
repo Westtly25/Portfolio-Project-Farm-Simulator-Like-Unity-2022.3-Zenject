@@ -181,19 +181,19 @@ public class NPCMovement : MonoBehaviour
         {
             ResetIdleAnimation();
             animatorOverrideController[blankAnimation] = npcTargetAnimationClip;
-            animator.SetBool(Settings.eventAnimation, true);
+            animator.SetBool(StaticData.eventAnimation, true);
         }
         else
         {
             animatorOverrideController[blankAnimation] = blankAnimation;
-            animator.SetBool(Settings.eventAnimation, false);
+            animator.SetBool(StaticData.eventAnimation, false);
         }
     }
 
     public void ClearNPCEventAnimation()
     {
         animatorOverrideController[blankAnimation] = blankAnimation;
-        animator.SetBool(Settings.eventAnimation, false);
+        animator.SetBool(StaticData.eventAnimation, false);
 
         // Clear any rotation on npc
         transform.rotation = Quaternion.identity;
@@ -206,19 +206,19 @@ public class NPCMovement : MonoBehaviour
         switch (npcFacingDirectionAtDestination)
         {
             case Direction.up:
-                animator.SetBool(Settings.idleUp, true);
+                animator.SetBool(StaticData.idleUp, true);
                 break;
 
             case Direction.down:
-                animator.SetBool(Settings.idleDown, true);
+                animator.SetBool(StaticData.idleDown, true);
                 break;
 
             case Direction.left:
-                animator.SetBool(Settings.idleLeft, true);
+                animator.SetBool(StaticData.idleLeft, true);
                 break;
 
             case Direction.right:
-                animator.SetBool(Settings.idleRight, true);
+                animator.SetBool(StaticData.idleRight, true);
                 break;
 
             case Direction.none:
@@ -284,7 +284,7 @@ public class NPCMovement : MonoBehaviour
         Vector3 worldPosition = grid.CellToWorld(gridPosition);
 
         // Get centre of grid square
-        return new Vector3(worldPosition.x + Settings.gridCellSize / 2f, worldPosition.y + Settings.gridCellSize / 2f, worldPosition.z);
+        return new Vector3(worldPosition.x + StaticData.gridCellSize / 2f, worldPosition.y + StaticData.gridCellSize / 2f, worldPosition.z);
     }
 
     public void CancelNPCMovement()
@@ -360,12 +360,12 @@ public class NPCMovement : MonoBehaviour
             float timeToMove = (float)(npcMovementStepTime.TotalSeconds - gameTime.TotalSeconds);
 
             // Calculate speed
-            float npcCalculatedSpeed = Mathf.Max(npcMinSpeed,Vector3.Distance(transform.position, npcNextWorldPosition) / timeToMove / Settings.secondsPerGameSecond);
+            float npcCalculatedSpeed = Mathf.Max(npcMinSpeed,Vector3.Distance(transform.position, npcNextWorldPosition) / timeToMove / StaticData.secondsPerGameSecond);
 
             //// If speed is at least npc min speed and less than npc max speed  then process, otherwise skip and move NPC immediately to position
             if (npcCalculatedSpeed <= npcMaxSpeed)
             {
-                while (Vector3.Distance(transform.position, npcNextWorldPosition) > Settings.pixelSize)
+                while (Vector3.Distance(transform.position, npcNextWorldPosition) > StaticData.pixelSize)
                 {
                     Vector3 unitVector = Vector3.Normalize(npcNextWorldPosition - transform.position);
                     Vector2 move = new Vector2(unitVector.x * npcCalculatedSpeed * Time.fixedDeltaTime, unitVector.y * npcCalculatedSpeed * Time.fixedDeltaTime);
@@ -402,11 +402,11 @@ public class NPCMovement : MonoBehaviour
             // Use left/right animation
             if (directionVector.x > 0)
             {
-                animator.SetBool(Settings.walkRight, true);
+                animator.SetBool(StaticData.walkRight, true);
             }
             else
             {
-                animator.SetBool(Settings.walkLeft, true);
+                animator.SetBool(StaticData.walkLeft, true);
             }
         }
         else
@@ -414,33 +414,33 @@ public class NPCMovement : MonoBehaviour
             //Use up/down animation
             if (directionVector.y > 0)
             {
-                animator.SetBool(Settings.walkUp, true);
+                animator.SetBool(StaticData.walkUp, true);
             }
             else
             {
-                animator.SetBool(Settings.walkDown, true);
+                animator.SetBool(StaticData.walkDown, true);
             }
         }
     }
 
     private void SetIdleAnimation()
     {
-        animator.SetBool(Settings.idleDown, true);
+        animator.SetBool(StaticData.idleDown, true);
     }
 
     private void ResetMoveAnimation()
     {
-        animator.SetBool(Settings.walkRight, false);
-        animator.SetBool(Settings.walkLeft, false);
-        animator.SetBool(Settings.walkUp, false);
-        animator.SetBool(Settings.walkDown, false);
+        animator.SetBool(StaticData.walkRight, false);
+        animator.SetBool(StaticData.walkLeft, false);
+        animator.SetBool(StaticData.walkUp, false);
+        animator.SetBool(StaticData.walkDown, false);
     }
 
     private void ResetIdleAnimation()
     {
-        animator.SetBool(Settings.idleRight, false);
-        animator.SetBool(Settings.idleLeft, false);
-        animator.SetBool(Settings.idleUp, false);
-        animator.SetBool(Settings.idleDown, false);
+        animator.SetBool(StaticData.idleRight, false);
+        animator.SetBool(StaticData.idleLeft, false);
+        animator.SetBool(StaticData.idleUp, false);
+        animator.SetBool(StaticData.idleDown, false);
     }
 }

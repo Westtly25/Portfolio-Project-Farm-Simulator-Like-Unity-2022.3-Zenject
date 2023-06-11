@@ -25,9 +25,9 @@ public class AudioService : IInitializable, IDisposable
     [SerializeField] private AudioMixerSnapshot gameAmbientSnapshot = null;
 
     [Header("Other")]
-    [SerializeField] private SO_SoundList so_soundList = null;
+    [SerializeField] private SoundList so_soundList = null;
 
-    [SerializeField] private SO_SceneSoundsList so_sceneSoundsList = null;
+    [SerializeField] private SceneSoundsList so_sceneSoundsList = null;
     [SerializeField] private float defaultSceneMusicPlayTimeSeconds = 120f;
     [SerializeField] private float sceneMusicStartMinSecs = 20f;
     [SerializeField] private float sceneMusicStartMaxSecs = 40f;

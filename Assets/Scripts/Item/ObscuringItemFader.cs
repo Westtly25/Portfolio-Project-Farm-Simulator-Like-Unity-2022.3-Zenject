@@ -28,7 +28,7 @@ public class ObscuringItemFader : MonoBehaviour
 
         while (1f - currentAlpha > 0.01f)
         {
-            currentAlpha = currentAlpha + distance / Settings.fadeInSeconds * Time.deltaTime;
+            currentAlpha = currentAlpha + distance / StaticData.fadeInSeconds * Time.deltaTime;
             spriteRenderer.color = new Color(1f, 1f, 1f, currentAlpha);
             yield return null;
         }
@@ -38,15 +38,15 @@ public class ObscuringItemFader : MonoBehaviour
     private IEnumerator FadeOutRoutine()
     {
         float currentAlpha = spriteRenderer.color.a;
-        float distance = currentAlpha - Settings.targetAlpha;
+        float distance = currentAlpha - StaticData.targetAlpha;
 
-        while(currentAlpha - Settings.targetAlpha > 0.01f)
+        while(currentAlpha - StaticData.targetAlpha > 0.01f)
         {
-            currentAlpha = currentAlpha - distance / Settings.fadeOutSeconds * Time.deltaTime;
+            currentAlpha = currentAlpha - distance / StaticData.fadeOutSeconds * Time.deltaTime;
             spriteRenderer.color = new Color(1f, 1f, 1f, currentAlpha);
             yield return null;
         }
 
-        spriteRenderer.color = new Color(1f, 1f, 1f, Settings.targetAlpha);
+        spriteRenderer.color = new Color(1f, 1f, 1f, StaticData.targetAlpha);
     }
 }

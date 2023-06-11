@@ -56,7 +56,7 @@ public class NPCPath : MonoBehaviour
                     ScenePath scenePath = sceneRoute.scenePathList[i];
 
                     // Check if this is the final destination
-                    if (scenePath.toGridCell.x >= Settings.maxGridWidth || scenePath.toGridCell.y >= Settings.maxGridHeight)
+                    if (scenePath.toGridCell.x >= StaticData.maxGridWidth || scenePath.toGridCell.y >= StaticData.maxGridHeight)
                     {
                         // If so use final destination grid cell
                         toGridX = npcScheduleEvent.toGridCoordinate.x;
@@ -70,7 +70,7 @@ public class NPCPath : MonoBehaviour
                     }
 
                     // Check if this is the starting position
-                    if (scenePath.fromGridCell.x >= Settings.maxGridWidth || scenePath.fromGridCell.y >= Settings.maxGridHeight)
+                    if (scenePath.fromGridCell.x >= StaticData.maxGridWidth || scenePath.fromGridCell.y >= StaticData.maxGridHeight)
                     {
                         // if so use npc position
                         fromGridX = npcMovement.npcCurrentGridPosition.x;
@@ -130,11 +130,11 @@ public class NPCPath : MonoBehaviour
             // if diagonal
             if (MovementIsDiagonal(npcMovementStep, previousNPCMovementStep))
             {
-                movementTimeStep = new TimeSpan(0, 0, (int)(Settings.gridCellDiagonalSize / Settings.secondsPerGameSecond / npcMovement.npcNormalSpeed));
+                movementTimeStep = new TimeSpan(0, 0, (int)(StaticData.gridCellDiagonalSize / StaticData.secondsPerGameSecond / npcMovement.npcNormalSpeed));
             }
             else
             {
-                movementTimeStep = new TimeSpan(0, 0, (int)(Settings.gridCellSize / Settings.secondsPerGameSecond / npcMovement.npcNormalSpeed));
+                movementTimeStep = new TimeSpan(0, 0, (int)(StaticData.gridCellSize / StaticData.secondsPerGameSecond / npcMovement.npcNormalSpeed));
             }
 
             currentGameTime = currentGameTime.Add(movementTimeStep);

@@ -1,25 +1,22 @@
 ﻿using Zenject;
 using UnityEngine;
-using System.Linq;
 using System.Collections.Generic;
 
 namespace Assets.Scripts.Pause_System
 {
-    public class PauseHandler : IPauseHandler
+    public class PauseHandler : IPauseHandler, IInitializable
     {
-        public List<IPauseListener> listeners = new List<IPauseListener>(20);
+        private readonly List<IPauseListener> listeners = new(20);
 
         [Header("Injected Data")]
         private readonly DiContainer container;
 
-        public bool IsPaused { get; private set; }
+        public bool IsPaused { get; private set; } = false;
 
         [Inject]
         public PauseHandler(DiContainer container)
         {
             this.container = container;
-
-            Initialize();
         }
 
         public void Register(IPauseListener listener) =>
@@ -41,7 +38,7 @@ namespace Assets.Scripts.Pause_System
             }
         }
 
-        private void Initialize()
+        public void Initialize()
         {
             IEnumerable<IPauseListener> diListeners = (IEnumerable<IPauseListener>)container.GetDependencyContracts<IPauseListener>();
 
@@ -49,8 +46,6 @@ namespace Assets.Scripts.Pause_System
             {
                 Register(listener);
             }
-
-            listeners = diListeners.ToList();
         }
     }
 }

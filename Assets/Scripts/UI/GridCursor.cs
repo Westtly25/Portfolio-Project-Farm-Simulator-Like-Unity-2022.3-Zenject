@@ -210,7 +210,7 @@ public class GridCursor : MonoBehaviour
                     // Get list of items at cursor location
                     List<Item> itemList = new List<Item>();
 
-                    HelperMethods.GetComponentsAtBoxLocation<Item>(out itemList, cursorWorldPosition, Settings.cursorSize, 0f);
+                    HelperMethods.GetComponentsAtBoxLocation<Item>(out itemList, cursorWorldPosition, StaticData.cursorSize, 0f);
 
                     #endregion Need to get any items at location so we can check if they are reapable
 

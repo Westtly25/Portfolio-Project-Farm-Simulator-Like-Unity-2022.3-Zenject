@@ -89,7 +89,7 @@ public class PauseMenuInventoryManagement : MonoBehaviour
     private void InitialiseInventoryManagementSlots()
     {
         // Clear inventory slots
-        for (int i = 0; i < Settings.playerMaximumInventoryCapacity; i++)
+        for (int i = 0; i < StaticData.playerMaximumInventoryCapacity; i++)
         {
             inventoryManagementSlot[i].greyedOutImageGO.SetActive(false);
             inventoryManagementSlot[i].itemDetails = null;
@@ -99,7 +99,7 @@ public class PauseMenuInventoryManagement : MonoBehaviour
         }
 
         // Grey out unavailable slots
-        for (int i = inventoryManager.InventoryListCapacityIntArray[(int)InventoryLocation.player]; i < Settings.playerMaximumInventoryCapacity; i++)
+        for (int i = inventoryManager.InventoryListCapacityIntArray[(int)InventoryLocation.player]; i < StaticData.playerMaximumInventoryCapacity; i++)
         {
             inventoryManagementSlot[i].greyedOutImageGO.SetActive(true);
         }

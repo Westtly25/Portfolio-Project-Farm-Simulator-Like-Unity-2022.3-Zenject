@@ -1,7 +1,6 @@
 ﻿using Zenject;
 using UnityEngine;
 using System.Collections.Generic;
-using Assets.Scripts.Architecture.AssetsManagment;
 
 namespace Assets.Scripts.View_System
 {
@@ -16,14 +15,13 @@ namespace Assets.Scripts.View_System
         [SerializeField]
         private readonly Stack<View> viewStack = new Stack<View>(6);
 
-        private readonly IAssetProvider assetProvider;
-        private readonly DiContainer diContainer;
+        [Header("Injected Data")]
+        private readonly ViewFactory viewFactory;
 
         [Inject]
-        public NavigationView(IAssetProvider assetProvider, DiContainer diContainer)
+        public NavigationView(ViewFactory viewFactory)
         {
-            this.assetProvider = assetProvider;
-            this.diContainer = diContainer;
+            this.viewFactory = viewFactory;
         }
 
         public void CleanUp()
@@ -101,7 +99,5 @@ namespace Assets.Scripts.View_System
                 Show(viewStack.Pop(), false);
             }
         }
-
-
     }
 }

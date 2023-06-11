@@ -2,6 +2,7 @@
 using UnityEngine.Rendering;
 using UnityEngine.InputSystem;
 using Assets.Scripts.Input_System;
+using Assets.Scripts.Pause_System;
 
 [RequireComponent(typeof(Rigidbody2D),
                   typeof(GenerateGUID),
@@ -17,10 +18,12 @@ public class Hero : MonoBehaviour
     [SerializeField] private DefaultInputActions inputActions;
 
     private InputService inputService;
+    private IPauseHandler pauseHandler;
 
-    public void Construct(InputService inputService)
+    public void Construct(InputService inputService, IPauseHandler pauseHandler)
     {
         this.inputService = inputService;
+        this.pauseHandler = pauseHandler;
     }
 
     public void Initialize()
@@ -37,7 +40,7 @@ public class Hero : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (!inputActions.Player.Move.IsPressed()) { return; }
+        if (!inputActions.Player.Move.IsPressed() && pauseHandler.IsPaused) { return; }
 
         Vector2 direction = inputActions.Player.Move.ReadValue<Vector2>();
         rgb2D.MovePosition(rgb2D.position + movement.GetDirection(direction));

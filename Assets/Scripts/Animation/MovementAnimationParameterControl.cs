@@ -27,57 +27,57 @@ public class MovementAnimationParameterControl : MonoBehaviour
         bool isSwingingToolRight, bool isSwingingToolLeft, bool isSwingingToolUp, bool isSwingingToolDown,
         bool idleUp, bool idleDown, bool idleLeft, bool idleRight)
     {
-        animator.SetFloat(Settings.xInput, xInput);
-        animator.SetFloat(Settings.yInput, yInput);
-        animator.SetBool(Settings.isWalking, isWalking);
-        animator.SetBool(Settings.isRunning, isRunning);
+        animator.SetFloat(StaticData.xInput, xInput);
+        animator.SetFloat(StaticData.yInput, yInput);
+        animator.SetBool(StaticData.isWalking, isWalking);
+        animator.SetBool(StaticData.isRunning, isRunning);
 
-        animator.SetInteger(Settings.toolEffect, (int)toolEffect);
+        animator.SetInteger(StaticData.toolEffect, (int)toolEffect);
 
         if (isUsingToolRight)
-            animator.SetTrigger(Settings.isUsingToolRight);
+            animator.SetTrigger(StaticData.isUsingToolRight);
         if (isUsingToolLeft)
-            animator.SetTrigger(Settings.isUsingToolLeft);
+            animator.SetTrigger(StaticData.isUsingToolLeft);
         if (isUsingToolUp)
-            animator.SetTrigger(Settings.isUsingToolUp);
+            animator.SetTrigger(StaticData.isUsingToolUp);
         if (isUsingToolDown)
-            animator.SetTrigger(Settings.isUsingToolDown);
+            animator.SetTrigger(StaticData.isUsingToolDown);
 
         if (isLiftingToolRight)
-            animator.SetTrigger(Settings.isLiftingToolRight);
+            animator.SetTrigger(StaticData.isLiftingToolRight);
         if (isLiftingToolLeft)
-            animator.SetTrigger(Settings.isLiftingToolLeft);
+            animator.SetTrigger(StaticData.isLiftingToolLeft);
         if (isLiftingToolUp)
-            animator.SetTrigger(Settings.isLiftingToolUp);
+            animator.SetTrigger(StaticData.isLiftingToolUp);
         if (isLiftingToolDown)
-            animator.SetTrigger(Settings.isLiftingToolDown);
+            animator.SetTrigger(StaticData.isLiftingToolDown);
 
         if (isSwingingToolRight)
-            animator.SetTrigger(Settings.isSwingingToolRight);
+            animator.SetTrigger(StaticData.isSwingingToolRight);
         if (isSwingingToolLeft)
-            animator.SetTrigger(Settings.isSwingingToolLeft);
+            animator.SetTrigger(StaticData.isSwingingToolLeft);
         if (isSwingingToolUp)
-            animator.SetTrigger(Settings.isSwingingToolUp);
+            animator.SetTrigger(StaticData.isSwingingToolUp);
         if (isSwingingToolDown)
-            animator.SetTrigger(Settings.isSwingingToolDown);
+            animator.SetTrigger(StaticData.isSwingingToolDown);
 
         if (isPickingRight)
-            animator.SetTrigger(Settings.isPickingRight);
+            animator.SetTrigger(StaticData.isPickingRight);
         if (isPickingLeft)
-            animator.SetTrigger(Settings.isPickingLeft);
+            animator.SetTrigger(StaticData.isPickingLeft);
         if (isPickingUp)
-            animator.SetTrigger(Settings.isPickingUp);
+            animator.SetTrigger(StaticData.isPickingUp);
         if (isPickingDown)
-            animator.SetTrigger(Settings.isPickingDown);
+            animator.SetTrigger(StaticData.isPickingDown);
 
         if (idleUp)
-            animator.SetTrigger(Settings.idleUp);
+            animator.SetTrigger(StaticData.idleUp);
         if (idleDown)
-            animator.SetTrigger(Settings.idleDown);
+            animator.SetTrigger(StaticData.idleDown);
         if (idleLeft)
-            animator.SetTrigger(Settings.idleLeft);
+            animator.SetTrigger(StaticData.idleLeft);
         if (idleRight)
-            animator.SetTrigger(Settings.idleRight);
+            animator.SetTrigger(StaticData.idleRight);
     }
 
     private void AnimationEventPlayFootstepSound()

@@ -5,6 +5,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 
+/// <summary>
+/// TODO
+/// Needs Refactoring
+/// </summary>
 [RequireComponent(typeof(Rigidbody2D))]
 public class Player : SingletonMonobehaviour<Player>, ISaveable
 {
@@ -138,12 +142,12 @@ public class Player : SingletonMonobehaviour<Player>, ISaveable
     {
         gridCursor = FindObjectOfType<GridCursor>();
         cursor = FindObjectOfType<Cursor>();
-        useToolAnimationPause = new WaitForSeconds(Settings.useToolAnimationPause);
-        liftToolAnimationPause = new WaitForSeconds(Settings.liftToolAnimationPause);
-        pickAnimationPause = new WaitForSeconds(Settings.pickAnimationPause);
-        afterUseToolAnimationPause = new WaitForSeconds(Settings.afterUseToolAnimationPause);
-        afterLiftToolAnimationPause = new WaitForSeconds(Settings.afterLiftToolAnimationPause);
-        afterPickAnimationPause = new WaitForSeconds(Settings.afterPickAnimationPause);
+        useToolAnimationPause = new WaitForSeconds(StaticData.useToolAnimationPause);
+        liftToolAnimationPause = new WaitForSeconds(StaticData.liftToolAnimationPause);
+        pickAnimationPause = new WaitForSeconds(StaticData.pickAnimationPause);
+        afterUseToolAnimationPause = new WaitForSeconds(StaticData.afterUseToolAnimationPause);
+        afterLiftToolAnimationPause = new WaitForSeconds(StaticData.afterLiftToolAnimationPause);
+        afterPickAnimationPause = new WaitForSeconds(StaticData.afterPickAnimationPause);
     }
 
     private void Update()
@@ -221,7 +225,7 @@ public class Player : SingletonMonobehaviour<Player>, ISaveable
             isRunning = true;
             isWalking = false;
             isIdle = false;
-            movementSpeed = Settings.runningSpeed;
+            movementSpeed = StaticData.runningSpeed;
 
             // Capture player direction for save game
             if (xInput < 0)
@@ -256,14 +260,14 @@ public class Player : SingletonMonobehaviour<Player>, ISaveable
             isRunning = false;
             isWalking = true;
             isIdle = false;
-            movementSpeed = Settings.walkingSpeed;
+            movementSpeed = StaticData.walkingSpeed;
         }
         else
         {
             isRunning = true;
             isWalking = false;
             isIdle = false;
-            movementSpeed = Settings.runningSpeed;
+            movementSpeed = StaticData.runningSpeed;
         }
     }
 
@@ -732,7 +736,7 @@ public class Player : SingletonMonobehaviour<Player>, ISaveable
             Vector2 size = new Vector2(equippedItemDetails.ItemUseRadius, equippedItemDetails.ItemUseRadius);
 
             // Get Item components with 2D collider located in the square at the centre point defined (2d colliders tested limited to maxCollidersToTestPerReapSwing)
-            Item[] itemArray = HelperMethods.GetComponentsAtBoxLocationNonAlloc<Item>(Settings.maxCollidersToTestPerReapSwing, point, size, 0f);
+            Item[] itemArray = HelperMethods.GetComponentsAtBoxLocationNonAlloc<Item>(StaticData.maxCollidersToTestPerReapSwing, point, size, 0f);
 
             int reapableItemCount = 0;
 
@@ -745,7 +749,7 @@ public class Player : SingletonMonobehaviour<Player>, ISaveable
                     if ( true) //InventoryManager.Instance.GetItemDetails(itemArray[i].ItemCode).itemType == ItemType.Reapable_scenary)
                     {
                         // Effect position
-                        Vector3 effectPosition = new Vector3(itemArray[i].transform.position.x, itemArray[i].transform.position.y + Settings.gridCellSize / 2f, itemArray[i].transform.position.z);
+                        Vector3 effectPosition = new Vector3(itemArray[i].transform.position.x, itemArray[i].transform.position.y + StaticData.gridCellSize / 2f, itemArray[i].transform.position.z);
 
                         // Trigger reaping effect
                         EventHandler.CallHarvestActionEffectEvent(effectPosition, HarvestActionEffect.reaping);
@@ -756,7 +760,7 @@ public class Player : SingletonMonobehaviour<Player>, ISaveable
                         Destroy(itemArray[i].gameObject);
 
                         reapableItemCount++;
-                        if (reapableItemCount >= Settings.maxTargetComponentsToDestroyPerReapSwing)
+                        if (reapableItemCount >= StaticData.maxTargetComponentsToDestroyPerReapSwing)
                             break;
                     }
                 }
@@ -912,7 +916,7 @@ public class Player : SingletonMonobehaviour<Player>, ISaveable
 
     public Vector3 GetPlayerCentrePosition()
     {
-        return new Vector3(transform.position.x, transform.position.y + Settings.playerCentreYOffset, transform.position.z);
+        return new Vector3(transform.position.x, transform.position.y + StaticData.playerCentreYOffset, transform.position.z);
     }
 
     #region Save Methods
@@ -927,7 +931,7 @@ public class Player : SingletonMonobehaviour<Player>, ISaveable
     public GameObjectSave ISaveableSave()
     {
         // Delete saveScene for game object if it already exists
-        GameObjectSave.sceneData.Remove(Settings.PersistentScene);
+        GameObjectSave.sceneData.Remove(StaticData.PersistentScene);
 
         // Create saveScene for game object
         SceneSave sceneSave = new SceneSave();
@@ -949,7 +953,7 @@ public class Player : SingletonMonobehaviour<Player>, ISaveable
         sceneSave.stringDictionary.Add("playerDirection", playerDirection.ToString());
 
         // Add sceneSave data for player game object
-        GameObjectSave.sceneData.Add(Settings.PersistentScene, sceneSave);
+        GameObjectSave.sceneData.Add(StaticData.PersistentScene, sceneSave);
 
         return GameObjectSave;
     }
@@ -958,7 +962,7 @@ public class Player : SingletonMonobehaviour<Player>, ISaveable
         if (gameSave.gameObjectData.TryGetValue(ISaveableUniqueID, out GameObjectSave gameObjectSave))
         {
             // Get save data dictionary for scene
-            if (gameObjectSave.sceneData.TryGetValue(Settings.PersistentScene, out SceneSave sceneSave))
+            if (gameObjectSave.sceneData.TryGetValue(StaticData.PersistentScene, out SceneSave sceneSave))
             {
                 // Get player position
                 if (sceneSave.vector3Dictionary != null && sceneSave.vector3Dictionary.TryGetValue("playerPosition", out Vector3Serializable playerPosition))

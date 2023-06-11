@@ -113,9 +113,9 @@ public class TimeManager : SingletonMonobehaviour<TimeManager>, ISaveable, IPaus
     {
         gameTick += Time.deltaTime;
 
-        if (gameTick >= Settings.secondsPerGameSecond)
+        if (gameTick >= StaticData.secondsPerGameSecond)
         {
-            gameTick -= Settings.secondsPerGameSecond;
+            gameTick -= StaticData.secondsPerGameSecond;
 
             UpdateGameSecond();
         }
@@ -213,7 +213,7 @@ public class TimeManager : SingletonMonobehaviour<TimeManager>, ISaveable, IPaus
 
     public GameObjectSave ISaveableSave()
     {
-        GameObjectSave.sceneData.Remove(Settings.PersistentScene);
+        GameObjectSave.sceneData.Remove(StaticData.PersistentScene);
 
         SceneSave sceneSave = new SceneSave();
 
@@ -230,7 +230,7 @@ public class TimeManager : SingletonMonobehaviour<TimeManager>, ISaveable, IPaus
         sceneSave.stringDictionary.Add("gameDayOfWeek", gameDayOfWeek);
         sceneSave.stringDictionary.Add("gameSeason", gameSeason.ToString());
 
-        GameObjectSave.sceneData.Add(Settings.PersistentScene, sceneSave);
+        GameObjectSave.sceneData.Add(StaticData.PersistentScene, sceneSave);
 
         return GameObjectSave;
     }
@@ -241,7 +241,7 @@ public class TimeManager : SingletonMonobehaviour<TimeManager>, ISaveable, IPaus
         {
             GameObjectSave = gameObjectSave;
 
-            if (GameObjectSave.sceneData.TryGetValue(Settings.PersistentScene, out SceneSave sceneSave))
+            if (GameObjectSave.sceneData.TryGetValue(StaticData.PersistentScene, out SceneSave sceneSave))
             {
                 if (sceneSave.intDictionary != null && sceneSave.stringDictionary != null)
                 {
