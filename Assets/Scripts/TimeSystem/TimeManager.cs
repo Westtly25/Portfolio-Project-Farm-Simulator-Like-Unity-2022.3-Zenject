@@ -4,7 +4,6 @@ using System.Collections.Generic;
 
 public class TimeManager : SingletonMonobehaviour<TimeManager>, ISaveable
 {
-
     private int gameYear = 1;
     private Season gameSeason = Season.Spring;
     private int gameDay = 1;

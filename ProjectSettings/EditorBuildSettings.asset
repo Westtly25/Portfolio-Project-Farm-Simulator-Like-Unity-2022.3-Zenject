@@ -6,16 +6,16 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/PersistentScene.unity
+    path: Assets/Scriptable Object Assets/Scenes/PersistentScene.unity
     guid: 0ef9bcf861dca7f4c800cf288d41874e
   - enabled: 1
-    path: Assets/Scenes/Scene1_Farm.unity
+    path: Assets/Scriptable Object Assets/Scenes/Scene1_Farm.unity
     guid: d32ec1053ae4a0b4c95b7fcda47a0f03
   - enabled: 1
-    path: Assets/Scenes/Scene2_Field.unity
+    path: Assets/Scriptable Object Assets/Scenes/Scene2_Field.unity
     guid: 94ef71ec7852d7446a2b84c4c229e74d
   - enabled: 1
-    path: Assets/Scenes/Scene3_Cabin.unity
+    path: Assets/Scriptable Object Assets/Scenes/Scene3_Cabin.unity
     guid: a0e498a3b7507fb4c8ad79e685e6a56c
   m_configObjects:
     com.unity.addressableassets: {fileID: 11400000, guid: ccf852dcb3bed254cad416118fcdeeac,

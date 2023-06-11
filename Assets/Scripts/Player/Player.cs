@@ -103,19 +103,15 @@ public class Player : SingletonMonobehaviour<Player>, ISaveable
 
         animationOverrides = GetComponentInChildren<AnimationOverrides>();
 
-        // Initialise swappable character attributes
         armsCharacterAttribute = new CharacterAttribute(CharacterPartAnimator.arms, PartVariantColour.none, PartVariantType.none);
         toolCharacterAttribute = new CharacterAttribute(CharacterPartAnimator.tool, PartVariantColour.none, PartVariantType.hoe);
 
-        // Initialise character attribute list
         characterAttributeCustomisationList = new List<CharacterAttribute>();
 
-        // Get unique ID for gameobject and create save data object
         ISaveableUniqueID = GetComponent<GenerateGUID>().GUID;
 
         GameObjectSave = new GameObjectSave();
 
-        // get reference to main camera
         mainCamera = Camera.main;
     }
 
