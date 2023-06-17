@@ -186,12 +186,12 @@ public class GridCursor : MonoBehaviour
 
     private bool IsCursorValidForCommodity(GridPropertyDetails gridPropertyDetails)
     {
-        return gridPropertyDetails.canDropItem;
+        return gridPropertyDetails.CanDropItem;
     }
 
     private bool IsCursorValidForSeed(GridPropertyDetails gridPropertyDetails)
     {
-        return gridPropertyDetails.canDropItem;
+        return gridPropertyDetails.CanDropItem;
     }
 
     private bool IsCursorValidForTool(GridPropertyDetails gridPropertyDetails, ItemDetails itemDetails)
@@ -200,7 +200,7 @@ public class GridCursor : MonoBehaviour
         switch (itemDetails.ItemType)
         {
             case ItemType.Hoeing_tool:
-                if (gridPropertyDetails.isDiggable == true && gridPropertyDetails.daysSinceDug == -1)
+                if (gridPropertyDetails.IsDiggable == true && gridPropertyDetails.DaysSinceDug == -1)
                 {
                     #region Need to get any items at location so we can check if they are reapable
 
@@ -240,7 +240,7 @@ public class GridCursor : MonoBehaviour
                 }
 
             case ItemType.Watering_tool:
-                if (gridPropertyDetails.daysSinceDug > -1 && gridPropertyDetails.daysSinceWatered == -1)
+                if (gridPropertyDetails.DaysSinceDug > -1 && gridPropertyDetails.DaysSinceWatered == -1)
                 {
                     return true;
                 }
@@ -253,13 +253,13 @@ public class GridCursor : MonoBehaviour
             case ItemType.Collecting_tool:
             case ItemType.Breaking_tool:
 
-                if (gridPropertyDetails.seedItemCode != -1)
+                if (gridPropertyDetails.SeedItemCode != -1)
                 {
-                    CropDetails cropDetails = so_CropDetailsList.GetCropDetails(gridPropertyDetails.seedItemCode);
+                    CropDetails cropDetails = so_CropDetailsList.GetCropDetails(gridPropertyDetails.SeedItemCode);
 
                     if (cropDetails != null)
                     {
-                        if (gridPropertyDetails.growthDays >= cropDetails.growthDays[cropDetails.growthDays.Length - 1])
+                        if (gridPropertyDetails.GrowthDays >= cropDetails.growthDays[cropDetails.growthDays.Length - 1])
                         {
                             if (cropDetails.CanUseToolToHarvestCrop(itemDetails.ItemCode))
                             {

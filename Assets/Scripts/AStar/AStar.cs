@@ -49,8 +49,8 @@ public class AStar : MonoBehaviour
         {
             NPCMovementStep npcMovementStep = new NPCMovementStep();
 
-            npcMovementStep.sceneName = sceneName;
-            npcMovementStep.gridCoordinate = new Vector2Int(nextNode.gridPosition.x + originX, nextNode.gridPosition.y + originY);
+            npcMovementStep.SceneName = sceneName;
+            npcMovementStep.GridCoordinate = new Vector2Int(nextNode.gridPosition.x + originX, nextNode.gridPosition.y + originY);
 
             npcMovementStepStack.Push(npcMovementStep);
 
@@ -204,12 +204,12 @@ public class AStar : MonoBehaviour
 
                         if (gridPropertyDetails != null)
                         {
-                            if (gridPropertyDetails.isNPCObstacle == true)
+                            if (gridPropertyDetails.IsNPCObstacle == true)
                             {
                                 Node node = gridNodes.GetGridNode(x, y);
                                 node.isObstacle = true;
                             }
-                            else if (gridPropertyDetails.isPath == true)
+                            else if (gridPropertyDetails.IsPath == true)
                             {
                                 Node node = gridNodes.GetGridNode(x, y);
                                 node.movementPenalty = pathMovementPenalty;

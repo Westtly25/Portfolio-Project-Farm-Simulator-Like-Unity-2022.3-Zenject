@@ -1,5 +1,6 @@
 ﻿using UnityEditor;
 using UnityEngine;
+using Assets.Scripts.Map;
 using UnityEngine.Tilemaps;
 
 [ExecuteAlways]
@@ -7,7 +8,7 @@ public class TilemapGridProperties : MonoBehaviour
 {
 #if UNITY_EDITOR
     private Tilemap tilemap;
-    [SerializeField] private SO_GridProperties gridProperties = null;
+    [SerializeField] private GridPropertiesContainer gridProperties = null;
     [SerializeField] private GridBoolProperty gridBoolProperty = GridBoolProperty.diggable;
 
     private void OnEnable()
@@ -19,7 +20,7 @@ public class TilemapGridProperties : MonoBehaviour
 
             if (gridProperties != null)
             {
-                gridProperties.gridPropertyList.Clear();
+                gridProperties.Properties.Clear();
             }
         }
     }
@@ -59,7 +60,7 @@ public class TilemapGridProperties : MonoBehaviour
 
                         if (tile != null)
                         {
-                            gridProperties.gridPropertyList.Add(new GridProperty(new GridCoordinate(x, y), gridBoolProperty, true));
+                            gridProperties.Properties.Add(new GridProperty(new GridCoordinate(x, y), gridBoolProperty, true));
                         }
                     }
                 }

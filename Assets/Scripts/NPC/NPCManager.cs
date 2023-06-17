@@ -5,7 +5,9 @@ using UnityEngine.SceneManagement;
 [RequireComponent(typeof(AStar))]
 public class NPCManager : SingletonMonobehaviour<NPCManager>
 {
-    [SerializeField] private SO_SceneRouteList so_SceneRouteList = null;
+    [SerializeField] 
+    private SceneRouteList sceneRouteList = null;
+
     private Dictionary<string, SceneRoute> sceneRouteDictionary;
 
     [HideInInspector]
@@ -19,9 +21,9 @@ public class NPCManager : SingletonMonobehaviour<NPCManager>
 
         sceneRouteDictionary = new Dictionary<string, SceneRoute>();
 
-        if (so_SceneRouteList.sceneRouteList.Count > 0)
+        if (sceneRouteList.sceneRouteList.Length > 0)
         {
-            foreach (SceneRoute so_sceneRoute in so_SceneRouteList.sceneRouteList)
+            foreach (SceneRoute so_sceneRoute in sceneRouteList.sceneRouteList)
             {
                 if (sceneRouteDictionary.ContainsKey(so_sceneRoute.fromSceneName.ToString() + so_sceneRoute.toSceneName.ToString()))
                 {

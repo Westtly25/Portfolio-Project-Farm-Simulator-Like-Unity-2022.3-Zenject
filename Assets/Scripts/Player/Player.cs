@@ -388,7 +388,7 @@ public class Player : SingletonMonobehaviour<Player>, ISaveable
 
     private void ProcessPlayerClickInputSeed(GridPropertyDetails gridPropertyDetails, ItemDetails itemDetails)
     {
-        if (itemDetails.CanBeDropped && gridCursor.CursorPositionIsValid && gridPropertyDetails.daysSinceDug > -1 && gridPropertyDetails.seedItemCode == -1)
+        if (itemDetails.CanBeDropped && gridCursor.CursorPositionIsValid && gridPropertyDetails.DaysSinceDug > -1 && gridPropertyDetails.SeedItemCode == -1)
         {
             PlantSeedAtCursor(gridPropertyDetails, itemDetails);
         }
@@ -403,8 +403,8 @@ public class Player : SingletonMonobehaviour<Player>, ISaveable
         if (GridPropertiesManager.Instance.GetCropDetails(itemDetails.ItemCode) != null)
         {
             // Update grid properties with seed details
-            gridPropertyDetails.seedItemCode = itemDetails.ItemCode;
-            gridPropertyDetails.growthDays = 0;
+            gridPropertyDetails.SeedItemCode = itemDetails.ItemCode;
+            gridPropertyDetails.GrowthDays = 0;
 
             // Display planted crop at grid property details
             GridPropertiesManager.Instance.DisplayPlantedCrop(gridPropertyDetails);
@@ -518,13 +518,13 @@ public class Player : SingletonMonobehaviour<Player>, ISaveable
         yield return useToolAnimationPause;
 
         // Set Grid property details for dug ground
-        if (gridPropertyDetails.daysSinceDug == -1)
+        if (gridPropertyDetails.DaysSinceDug == -1)
         {
-            gridPropertyDetails.daysSinceDug = 0;
+            gridPropertyDetails.DaysSinceDug = 0;
         }
 
         // Set grid property to dug
-        GridPropertiesManager.Instance.SetGridPropertyDetails(gridPropertyDetails.gridX, gridPropertyDetails.gridY, gridPropertyDetails);
+        GridPropertiesManager.Instance.SetGridPropertyDetails(gridPropertyDetails.GridX, gridPropertyDetails.GridY, gridPropertyDetails);
 
         // Display dug grid tiles
         GridPropertiesManager.Instance.DisplayDugGround(gridPropertyDetails);
@@ -578,13 +578,13 @@ public class Player : SingletonMonobehaviour<Player>, ISaveable
         yield return liftToolAnimationPause;
 
         // Set Grid property details for watered ground
-        if (gridPropertyDetails.daysSinceWatered == -1)
+        if (gridPropertyDetails.DaysSinceWatered == -1)
         {
-            gridPropertyDetails.daysSinceWatered = 0;
+            gridPropertyDetails.DaysSinceWatered = 0;
         }
 
         // Set grid property to watered
-        GridPropertiesManager.Instance.SetGridPropertyDetails(gridPropertyDetails.gridX, gridPropertyDetails.gridY, gridPropertyDetails);
+        GridPropertiesManager.Instance.SetGridPropertyDetails(gridPropertyDetails.GridX, gridPropertyDetails.GridY, gridPropertyDetails);
 
         // Display watered grid tiles
         GridPropertiesManager.Instance.DisplayWateredGround(gridPropertyDetails);

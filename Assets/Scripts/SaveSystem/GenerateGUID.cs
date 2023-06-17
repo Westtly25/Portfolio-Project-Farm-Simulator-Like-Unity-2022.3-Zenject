@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 [ExecuteAlways]
-public class GenerateGUID : MonoBehaviour
+public sealed class GenerateGUID : MonoBehaviour
 {
     [SerializeField]
     private string guid = "";
@@ -9,7 +9,7 @@ public class GenerateGUID : MonoBehaviour
     public string GUID
     {
         get => guid;
-        set => guid = value;
+        private set => guid = value;
     }
 
     private void Awake()

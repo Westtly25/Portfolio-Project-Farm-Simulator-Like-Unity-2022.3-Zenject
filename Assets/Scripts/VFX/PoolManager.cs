@@ -1,14 +1,19 @@
-﻿using System.Collections.Generic;
+﻿using System;
 using UnityEngine;
+using System.Collections.Generic;
 
 public class PoolManager : SingletonMonobehaviour<PoolManager>
 {
-    private Dictionary<int, Queue<GameObject>> poolDictionary = new Dictionary<int, Queue<GameObject>>();
-    [SerializeField] private Pool[] pool = null;
-    [SerializeField] private Transform objectPoolTransform = null;
+    private readonly Dictionary<int, Queue<GameObject>> poolDictionary = new Dictionary<int, Queue<GameObject>>();
+
+    [SerializeField, Space(4)]
+    private Pool[] pool = null;
+
+    [SerializeField, Space(4)]
+    private Transform objectPoolTransform = null;
 
 
-    [System.Serializable]
+    [Serializable]
     public struct Pool
     {
         public int poolSize;
@@ -17,7 +22,6 @@ public class PoolManager : SingletonMonobehaviour<PoolManager>
 
     private void Start()
     {
-        // Create object pools on start
         for (int i = 0; i < pool.Length; i++)
         {
             CreatePool(pool[i].prefab, pool[i].poolSize);
@@ -28,9 +32,9 @@ public class PoolManager : SingletonMonobehaviour<PoolManager>
     private void CreatePool(GameObject prefab, int poolSize)
     {
         int poolKey = prefab.GetInstanceID();
-        string prefabName = prefab.name; // get prefab name
+        string prefabName = prefab.name;
 
-        GameObject parentGameObject = new GameObject(prefabName + "Anchor"); // create parent gameobject to parent the child objects to
+        GameObject parentGameObject = new GameObject(prefabName + "Anchor");
 
         parentGameObject.transform.SetParent(objectPoolTransform);
 
@@ -49,16 +53,15 @@ public class PoolManager : SingletonMonobehaviour<PoolManager>
         }
     }
 
-    public GameObject ReuseObject(GameObject prefab, Vector3 position, Quaternion rotation)
+    public GameObject ReuseObject(GameObject prefab, Vector3 at, Quaternion to)
     {
         int poolKey = prefab.GetInstanceID();
 
         if (poolDictionary.ContainsKey(poolKey))
         {
-            // Get object from pool queue
             GameObject objectToReuse = GetObjectFromPool(poolKey);
 
-            ResetObject(position, rotation, objectToReuse, prefab);
+            ResetObject(at, to, objectToReuse, prefab);
 
             return objectToReuse;
         }
@@ -75,24 +78,18 @@ public class PoolManager : SingletonMonobehaviour<PoolManager>
         GameObject objectToReuse = poolDictionary[poolKey].Dequeue();
         poolDictionary[poolKey].Enqueue(objectToReuse);
 
-           if (objectToReuse.activeSelf == true)
+        if (objectToReuse.activeSelf == true)
         {
             objectToReuse.SetActive(false);
         }
-
-
-
         return objectToReuse;
     }
-    private static void ResetObject(Vector3 position, Quaternion rotation, GameObject objectToReuse, GameObject prefab)
+
+    private static void ResetObject(Vector3 at, Quaternion to, GameObject objectToReuse, GameObject prefab)
     {
-        objectToReuse.transform.position = position;
-        objectToReuse.transform.rotation = rotation;
+        objectToReuse.transform.position = at;
+        objectToReuse.transform.rotation = to;
 
-
-        //  objectToReuse.GetComponent<Rigidbody2D>().velocity=Vector3.zero;
         objectToReuse.transform.localScale = prefab.transform.localScale;
-
     }
-
 }

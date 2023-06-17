@@ -1,11 +1,10 @@
-﻿
-using UnityEngine;
+﻿using UnityEngine;
 
 public class NPCMovementStep
 {
-    public SceneName sceneName;
-    public int hour;
-    public int minute;
-    public int second;
-    public Vector2Int gridCoordinate;
+    public SceneName SceneName { get; set; }
+    public int Hour { get; set; }
+    public int Minute { get; set; }
+    public int Second { get; set; }
+    public Vector2Int GridCoordinate { get; set; }
 }

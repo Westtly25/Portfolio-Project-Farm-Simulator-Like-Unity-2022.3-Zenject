@@ -53,10 +53,10 @@ public class CropInstantiator : MonoBehaviour
                 gridPropertyDetails = new GridPropertyDetails();
             }
 
-            gridPropertyDetails.daysSinceDug = daysSinceDug;
-            gridPropertyDetails.daysSinceWatered = daysSinceWatered;
-            gridPropertyDetails.seedItemCode = seedItemCode;
-            gridPropertyDetails.growthDays = growthDays;
+            gridPropertyDetails.DaysSinceDug = daysSinceDug;
+            gridPropertyDetails.DaysSinceWatered = daysSinceWatered;
+            gridPropertyDetails.SeedItemCode = seedItemCode;
+            gridPropertyDetails.GrowthDays = growthDays;
 
             GridPropertiesManager.Instance.SetGridPropertyDetails(cropGridPosition.x, cropGridPosition.y, gridPropertyDetails);
 

@@ -16,6 +16,19 @@ public class SaveLoadManager : SingletonMonobehaviour<SaveLoadManager>
         iSaveableObjectList = new List<ISaveable>();
     }
 
+    public void Register(ISaveable saveable)
+    {
+        iSaveableObjectList.Add(saveable);
+    }
+
+    public void UnRegister(ISaveable saveable)
+    {
+        iSaveableObjectList.Remove(saveable);
+    }
+
+    public void Clear() =>
+        iSaveableObjectList.Clear();
+
     public void LoadDataFromFile()
     {
         BinaryFormatter bf = new BinaryFormatter();

@@ -33,7 +33,7 @@ public class Crop : MonoBehaviour
         if (gridPropertyDetails == null)
             return;
 
-        ItemDetails seedItemDetails = inventoryManager.GetItemDetails(gridPropertyDetails.seedItemCode);
+        ItemDetails seedItemDetails = inventoryManager.GetItemDetails(gridPropertyDetails.SeedItemCode);
         if (seedItemDetails == null)
             return;
 
@@ -105,10 +105,10 @@ public class Crop : MonoBehaviour
             audioService.PlaySound(cropDetails.harvestSound);
         }
 
-        gridPropertyDetails.seedItemCode = -1;
-        gridPropertyDetails.growthDays = -1;
-        gridPropertyDetails.daysSinceLastHarvest = -1;
-        gridPropertyDetails.daysSinceWatered = -1;
+        gridPropertyDetails.SeedItemCode = -1;
+        gridPropertyDetails.GrowthDays = -1;
+        gridPropertyDetails.DaysSinceLastHarvest = -1;
+        gridPropertyDetails.DaysSinceWatered = -1;
 
         if (cropDetails.hideCropBeforeHarvestedAnimation)
         {
@@ -124,7 +124,7 @@ public class Crop : MonoBehaviour
             }
         }
 
-        GridPropertiesManager.Instance.SetGridPropertyDetails(gridPropertyDetails.gridX, gridPropertyDetails.gridY, gridPropertyDetails);
+        GridPropertiesManager.Instance.SetGridPropertyDetails(gridPropertyDetails.GridX, gridPropertyDetails.GridY, gridPropertyDetails);
 
         if (cropDetails.isHarvestedAnimation && animator != null)
         {
@@ -194,12 +194,12 @@ public class Crop : MonoBehaviour
 
     private void CreateHarvestedTransformCrop(CropDetails cropDetails, GridPropertyDetails gridPropertyDetails)
     {
-        gridPropertyDetails.seedItemCode = cropDetails.harvestedTransformItemCode;
-        gridPropertyDetails.growthDays = 0;
-        gridPropertyDetails.daysSinceLastHarvest = -1;
-        gridPropertyDetails.daysSinceWatered = -1;
+        gridPropertyDetails.SeedItemCode = cropDetails.harvestedTransformItemCode;
+        gridPropertyDetails.GrowthDays = 0;
+        gridPropertyDetails.DaysSinceLastHarvest = -1;
+        gridPropertyDetails.DaysSinceWatered = -1;
 
-        GridPropertiesManager.Instance.SetGridPropertyDetails(gridPropertyDetails.gridX, gridPropertyDetails.gridY, gridPropertyDetails);
+        GridPropertiesManager.Instance.SetGridPropertyDetails(gridPropertyDetails.GridX, gridPropertyDetails.GridY, gridPropertyDetails);
 
         GridPropertiesManager.Instance.DisplayPlantedCrop(gridPropertyDetails);
     }

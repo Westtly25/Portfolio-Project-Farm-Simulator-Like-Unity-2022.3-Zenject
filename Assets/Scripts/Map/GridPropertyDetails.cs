@@ -1,18 +1,18 @@
 ﻿[System.Serializable]
-public class GridPropertyDetails
+public sealed class GridPropertyDetails
 {
-    public int gridX;
-    public int gridY;
-    public bool isDiggable = false;
-    public bool canDropItem = false;
-    public bool canPlaceFurniture = false;
-    public bool isPath = false;
-    public bool isNPCObstacle = false;
-    public int daysSinceDug = -1;
-    public int daysSinceWatered = -1;
-    public int seedItemCode = -1;
-    public int growthDays = -1;
-    public int daysSinceLastHarvest = -1;
+    public int GridX { get; set; }
+    public int GridY { get; set; }
+    public bool IsDiggable { get; set; } = false;
+    public bool CanDropItem { get; set; } = false;
+    public bool CanPlaceFurniture { get; set; } = false;
+    public bool IsPath { get; set; } = false;
+    public bool IsNPCObstacle { get; set; } = false;
+    public int DaysSinceDug { get; set; } = -1;
+    public int DaysSinceWatered { get; set; } = -1;
+    public int SeedItemCode { get; set; } = -1;
+    public int GrowthDays { get; set; } = -1;
+    public int DaysSinceLastHarvest { get; set; } = -1;
 
     public GridPropertyDetails()
     {

@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using Assets.Scripts.Stats;
 using UnityEngine.Rendering;
 using UnityEngine.InputSystem;
 using Assets.Scripts.Input_System;
@@ -13,14 +14,22 @@ public class Hero : MonoBehaviour
     [SerializeField] private Rigidbody2D rgb2D;
     [SerializeField] private GenerateGUID generateGUID;
 
-    [Header("Classes")]
-    [SerializeField] private Movement movement;
-    [SerializeField] private DefaultInputActions inputActions;
+    [Header("Classes"), Space(4)]
+    [SerializeField]
+    private Movement movement;
 
+    [SerializeField]
+    private DefaultInputActions inputActions;
+
+    [SerializeField]
+    private StatsBehaviour statsBehaviour;
+
+    [Header("Injected Data")]
     private InputService inputService;
     private IPauseHandler pauseHandler;
 
-    public void Construct(InputService inputService, IPauseHandler pauseHandler)
+    public void Construct(InputService inputService,
+                          IPauseHandler pauseHandler)
     {
         this.inputService = inputService;
         this.pauseHandler = pauseHandler;

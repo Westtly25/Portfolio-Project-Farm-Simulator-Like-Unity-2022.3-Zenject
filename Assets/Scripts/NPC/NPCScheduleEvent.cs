@@ -21,6 +21,10 @@ public class NPCScheduleEvent
             return (hour * 100) + minute;
         }
     }
+    public NPCScheduleEvent()
+    {
+
+    }
 
     public NPCScheduleEvent(int hour, int minute, int priority, int day, Weather weather, Season season, SceneName toSceneName, GridCoordinate toGridCoordinate, AnimationClip animationAtDestination)
     {
@@ -35,13 +39,6 @@ public class NPCScheduleEvent
         this.animationAtDestination = animationAtDestination;
     }
 
-    public NPCScheduleEvent()
-    {
-
-    }
-
-    public override string ToString()
-    {
-        return $"Time: {Time}, Priority: {priority}, Day: {day} Weather: {weather}, Season: {season}";
-    }
+    public override string ToString() =>
+        $"Time: {Time}, Priority: {priority}, Day: {day} Weather: {weather}, Season: {season}";
 }
