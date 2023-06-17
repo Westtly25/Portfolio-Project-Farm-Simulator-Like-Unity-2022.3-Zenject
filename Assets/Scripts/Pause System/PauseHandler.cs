@@ -18,6 +18,15 @@ namespace Assets.Scripts.Pause_System
         {
             this.container = container;
         }
+        public void Initialize()
+        {
+            IEnumerable<IPauseListener> diListeners = (IEnumerable<IPauseListener>)container.GetDependencyContracts<IPauseListener>();
+
+            foreach (var listener in diListeners)
+            {
+                Register(listener);
+            }
+        }
 
         public void Register(IPauseListener listener) =>
             listeners.Add(listener);
@@ -35,16 +44,6 @@ namespace Assets.Scripts.Pause_System
             foreach (IPauseListener listener in listeners)
             {
                 listener.Pause(isPaused);
-            }
-        }
-
-        public void Initialize()
-        {
-            IEnumerable<IPauseListener> diListeners = (IEnumerable<IPauseListener>)container.GetDependencyContracts<IPauseListener>();
-
-            foreach (var listener in diListeners)
-            {
-                Register(listener);
             }
         }
     }

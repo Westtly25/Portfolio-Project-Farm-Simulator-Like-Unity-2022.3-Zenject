@@ -10,6 +10,8 @@ namespace Assets.Scripts.Stats
         [SerializeField, ReadOnly]
         private Stat[] stats;
 
+        public Stat Stats => Stats;
+
         public StatsBehaviour()
         {
             stats = new Stat[3]

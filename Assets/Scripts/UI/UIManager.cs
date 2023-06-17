@@ -3,15 +3,14 @@ using UnityEngine.UI;
 
 public class UIManager : SingletonMonobehaviour<UIManager>
 {
-
-    private bool _pauseMenuOn = false;
+    private bool pauseMenuOn = false;
     [SerializeField] private UIInventoryBar uiInventoryBar = null;
     [SerializeField] private PauseMenuInventoryManagement pauseMenuInventoryManagement = null;
     [SerializeField] private GameObject pauseMenu = null;
     [SerializeField] private GameObject[] menuTabs = null;
     [SerializeField] private Button[] menuButtons = null;
 
-    public bool PauseMenuOn { get => _pauseMenuOn; set => _pauseMenuOn = value; }
+    public bool PauseMenuOn { get => pauseMenuOn; set => pauseMenuOn = value; }
 
     protected override void Awake()
     {
@@ -28,8 +27,6 @@ public class UIManager : SingletonMonobehaviour<UIManager>
 
     private void PauseMenu()
     {
-        // Toggle pause menu if escape is pressed
-
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             if (PauseMenuOn)
@@ -45,10 +42,8 @@ public class UIManager : SingletonMonobehaviour<UIManager>
 
     private void EnablePauseMenu()
     {
-        // Destroy any currently dragged items
         uiInventoryBar.DestroyCurrentlyDraggedItems();
 
-        // Clear currently selected items
         uiInventoryBar.ClearCurrentlySelectedItems();
 
         PauseMenuOn = true;
@@ -56,16 +51,13 @@ public class UIManager : SingletonMonobehaviour<UIManager>
         Time.timeScale = 0;
         pauseMenu.SetActive(true);
 
-        // Trigger garbage collector
         System.GC.Collect();
 
-        // Highlight selected button
         HighlightButtonForSelectedTab();
     }
 
     public void DisablePauseMenu()
     {
-        // Destroy any currently dragged items
         pauseMenuInventoryManagement.DestroyCurrentlyDraggedItems();
 
         PauseMenuOn = false;

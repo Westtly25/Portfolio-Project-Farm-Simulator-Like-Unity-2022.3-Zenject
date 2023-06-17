@@ -45,14 +45,14 @@ public class AudioService : IInitializable, IDisposable
 
         foreach (SoundItem soundItem in so_soundList.soundDetails)
         {
-            soundDictionary.Add(soundItem.soundName, soundItem);
+            soundDictionary.Add(soundItem.SoundName, soundItem);
         }
 
         sceneSoundsDictionary = new Dictionary<SceneName, SceneSoundsItem>();
 
         foreach (SceneSoundsItem sceneSoundsItem in so_sceneSoundsList.sceneSoundsDetails)
         {
-            sceneSoundsDictionary.Add(sceneSoundsItem.sceneName, sceneSoundsItem);
+            sceneSoundsDictionary.Add(sceneSoundsItem.SceneName, sceneSoundsItem);
         }
 
 
@@ -86,8 +86,8 @@ public class AudioService : IInitializable, IDisposable
             // Get Music and Ambient Sounds For Scene
             if (sceneSoundsDictionary.TryGetValue(currentSceneName, out SceneSoundsItem sceneSoundsItem))
             {
-                soundDictionary.TryGetValue(sceneSoundsItem.musicForScene, out musicSoundItem);
-                soundDictionary.TryGetValue(sceneSoundsItem.ambientSoundForScene, out ambientSoundItem);
+                soundDictionary.TryGetValue(sceneSoundsItem.MusicForScene, out musicSoundItem);
+                soundDictionary.TryGetValue(sceneSoundsItem.AmbientSoundForScene, out ambientSoundItem);
             }
             else
             {
@@ -120,9 +120,9 @@ public class AudioService : IInitializable, IDisposable
 
     private void PlayMusicSoundClip(SoundItem musicSoundItem, float transitionTimeSeconds)
     {
-        gameAudioMixer.SetFloat("MusicVolume", ConvertSoundVolumeDecimalFractionToDecibels(musicSoundItem.soundVolume));
+        gameAudioMixer.SetFloat("MusicVolume", ConvertSoundVolumeDecimalFractionToDecibels(musicSoundItem.SoundVolume));
 
-        gameMusicAudioSource.clip = musicSoundItem.soundClip;
+        gameMusicAudioSource.clip = musicSoundItem.SoundClip;
         gameMusicAudioSource.Play();
 
         gameMusicSnapshot.TransitionTo(transitionTimeSeconds);
@@ -130,9 +130,9 @@ public class AudioService : IInitializable, IDisposable
 
     private void PlayAmbientSoundClip(SoundItem ambientSoundItem, float transitionTimeSeconds)
     {
-        gameAudioMixer.SetFloat("AmbientVolume", ConvertSoundVolumeDecimalFractionToDecibels(ambientSoundItem.soundVolume));
+        gameAudioMixer.SetFloat("AmbientVolume", ConvertSoundVolumeDecimalFractionToDecibels(ambientSoundItem.SoundVolume));
 
-        ambientSoundAudioSource.clip = ambientSoundItem.soundClip;
+        ambientSoundAudioSource.clip = ambientSoundItem.SoundClip;
         ambientSoundAudioSource.Play();
 
         gameAmbientSnapshot.TransitionTo(transitionTimeSeconds);
@@ -152,7 +152,7 @@ public class AudioService : IInitializable, IDisposable
 
             sound.SetSound(soundItem);
             soundGameObject.SetActive(true);
-            MainThreadDispatcher.StartCoroutine(DisableSound(soundGameObject, soundItem.soundClip.length));
+            MainThreadDispatcher.StartCoroutine(DisableSound(soundGameObject, soundItem.SoundClip.length));
         }
     }
 

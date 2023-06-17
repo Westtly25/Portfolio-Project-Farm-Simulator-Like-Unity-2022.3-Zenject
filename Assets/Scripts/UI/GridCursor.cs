@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using Zenject;
 using UnityEngine;
 using UnityEngine.UI;
-using Zenject;
+using System.Collections.Generic;
 
 public class GridCursor : MonoBehaviour
 {
@@ -196,7 +196,6 @@ public class GridCursor : MonoBehaviour
 
     private bool IsCursorValidForTool(GridPropertyDetails gridPropertyDetails, ItemDetails itemDetails)
     {
-        // Switch on tool
         switch (itemDetails.ItemType)
         {
             case ItemType.Hoeing_tool:
@@ -204,10 +203,8 @@ public class GridCursor : MonoBehaviour
                 {
                     #region Need to get any items at location so we can check if they are reapable
 
-                    // Get world position for cursor
                     Vector3 cursorWorldPosition = new Vector3(GetWorldPositionForCursor().x + 0.5f, GetWorldPositionForCursor().y + 0.5f, 0f);
 
-                    // Get list of items at cursor location
                     List<Item> itemList = new List<Item>();
 
                     HelperMethods.GetComponentsAtBoxLocation<Item>(out itemList, cursorWorldPosition, StaticData.cursorSize, 0f);

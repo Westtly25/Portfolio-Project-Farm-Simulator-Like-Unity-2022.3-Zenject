@@ -1,7 +1,7 @@
 ﻿[System.Serializable]
 public class SceneSoundsItem
 {
-    public SceneName sceneName;
-    public SoundName ambientSoundForScene;
-    public SoundName musicForScene;
+    public SceneName SceneName { get; set; }
+    public SoundName AmbientSoundForScene { get; set; }
+    public SoundName MusicForScene { get; set; }
 }

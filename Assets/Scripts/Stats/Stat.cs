@@ -15,6 +15,8 @@ namespace Assets.Scripts.Stats
         [SerializeField, Min(100)]
         private float maxValue;
 
+        public event Action<float> ValueChanged;
+
         public Stat(StatType statType, float value, float maxValue)
         {
             this.statType = statType;
@@ -30,7 +32,12 @@ namespace Assets.Scripts.Stats
         public float Value
         {
             get => value;
-            set => this.value = value;
+            set
+            {
+                this.value = value;
+                ValueChanged?.Invoke(this.value);
+            }
+
         }
         public float MaxValue
         {
