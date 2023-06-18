@@ -39,6 +39,11 @@ namespace Assets.Scripts.Zenject_Installers
                      .FromNew()
                      .AsSingle()
                      .NonLazy();
+
+            Container.Bind<NPCFactory>()
+                     .FromNew()
+                     .AsSingle()
+                     .NonLazy();
         }
     }
 }

@@ -11,9 +11,9 @@ namespace Assets.Scripts.Architecture.State_System
         public State CurrentState { get; private set; }
         public Transition CurrentTransition { get; private set; }
 
-        private readonly HashSet<State> _states = new(6);
-        private readonly List<Transition> _anyTransitions = new(6);
-        private readonly List<Transition> _transitions = new(6);
+        private readonly HashSet<State> states = new(6);
+        private readonly List<Transition> anyTransitions = new(6);
+        private readonly List<Transition> transitions = new(6);
 
         private bool _isStatesAdded;
 
@@ -33,7 +33,7 @@ namespace Assets.Scripts.Architecture.State_System
                     throw new NullReferenceException(nameof(state));
                 }
 
-                _states.Add(state);
+                this.states.Add(state);
             }
 
             if (states.Length > 0)
@@ -54,7 +54,7 @@ namespace Assets.Scripts.Architecture.State_System
             var stateFrom = GetState(typeof(TStateFrom));
             var stateTo = GetState(typeof(TStateTo));
 
-            _transitions.Add(new Transition(stateFrom, stateTo, condition));
+            transitions.Add(new Transition(stateFrom, stateTo, condition));
         }
 
         public void AddAnyTransition<TStateTo>(Func<bool> condition)
@@ -62,20 +62,19 @@ namespace Assets.Scripts.Architecture.State_System
         {
             var stateTo = GetState(typeof(TStateTo));
 
-            _anyTransitions.Add(new Transition(null, stateTo, condition));
+            anyTransitions.Add(new Transition(null, stateTo, condition));
         }
 
         public void Run()
         {
+            if (states == null)
+                return;
+
             if (TransitionsEnabled)
-            {
                 SetStateByTransitions();
-            }
 
             if (HasCurrentState)
-            {
                 CurrentState.OnRun();
-            }
         }
 
         public void SetStateByTransitions()
@@ -98,7 +97,7 @@ namespace Assets.Scripts.Architecture.State_System
 
         private State GetState(Type type)
         {
-            foreach (var state in _states)
+            foreach (var state in states)
             {
                 if (state.GetType() == type)
                 {
@@ -136,24 +135,24 @@ namespace Assets.Scripts.Architecture.State_System
 
         private Transition GetTransition()
         {
-            for (var i = 0; i < _anyTransitions.Count; i++)
+            for (var i = 0; i < anyTransitions.Count; i++)
             {
-                if (_anyTransitions[i].Condition())
+                if (anyTransitions[i].Condition())
                 {
-                    return _anyTransitions[i];
+                    return anyTransitions[i];
                 }
             }
 
-            for (var i = 0; i < _transitions.Count; i++)
+            for (var i = 0; i < transitions.Count; i++)
             {
-                if (_transitions[i].From.IsActive == false)
+                if (transitions[i].From.IsActive == false)
                 {
                     continue;
                 }
 
-                if (_transitions[i].Condition())
+                if (transitions[i].Condition())
                 {
-                    return _transitions[i];
+                    return transitions[i];
                 }
             }
 
