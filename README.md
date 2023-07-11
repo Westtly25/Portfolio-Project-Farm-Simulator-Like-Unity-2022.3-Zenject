@@ -1,5 +1,5 @@
-# Farming RPG Course
-
+# A Farming simulator game
+## This project is a clone of popular game Stardew valley
 ### Technology stack : 
   1. Zenject,
   2. UniRx,
