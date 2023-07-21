@@ -1,4 +1,4 @@
-# A Farming simulator game on Unity 2022.3
+# A Farming simulator game Unity 2022.3 & Zenject
 ## Description
 #### This project is a clone of popular game Stardew valley where player has own farm, can plant plants, harvest and e.t.c
 ## Technology stack : 
