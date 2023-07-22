@@ -1,7 +1,7 @@
 ﻿using Assets.Scripts.Architecture.State_System;
 using Assets.Scripts.Architecture.AssetsManagment;
 
-namespace Assets.Scripts.Architecture
+namespace Assets.Scripts.Architecture.State_System
 {
     public class LoadProgressState : State
     {

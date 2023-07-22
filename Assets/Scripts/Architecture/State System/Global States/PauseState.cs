@@ -1,7 +1,7 @@
 ﻿using Assets.Scripts.Architecture.State_System;
 using Assets.Scripts.Pause_System;
 
-namespace Assets.Scripts.Architecture
+namespace Assets.Scripts.Architecture.State_System
 {
     public class PauseState : State
     {
