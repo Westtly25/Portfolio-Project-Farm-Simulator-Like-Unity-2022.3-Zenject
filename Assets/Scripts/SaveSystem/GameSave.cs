@@ -3,7 +3,6 @@
 [System.Serializable]
 public class GameSave
 {
-    // string key = GUID gameobject ID
     public Dictionary<string, GameObjectSave> gameObjectData;
 
     public GameSave()

@@ -1,5 +1,4 @@
-﻿using Assets.Scripts.Architecture.State_System;
-using Assets.Scripts.Pause_System;
+﻿using Assets.Scripts.Pause_System;
 
 namespace Assets.Scripts.Architecture.State_System
 {
@@ -7,10 +6,8 @@ namespace Assets.Scripts.Architecture.State_System
     {
         private readonly IPauseHandler pauseHandler;
 
-        public PauseState(IPauseHandler pauseHandler)
-        {
+        public PauseState(IPauseHandler pauseHandler) =>
             this.pauseHandler = pauseHandler;
-        }
 
         public override void OnEnter()
         {

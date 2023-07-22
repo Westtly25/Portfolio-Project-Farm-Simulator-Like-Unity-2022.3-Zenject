@@ -176,10 +176,8 @@ public class Player : SingletonMonobehaviour<Player>, ISaveable
         #endregion Player Input
     }
 
-    private void FixedUpdate()
-    {
+    private void FixedUpdate() =>
         PlayerMovement();
-    }
 
     private void PlayerMovement()
     {

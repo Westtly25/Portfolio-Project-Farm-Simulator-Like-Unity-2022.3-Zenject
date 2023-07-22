@@ -19,17 +19,16 @@ namespace Assets.Scripts.Pause_System
         }
 
         [Inject]
-        public PauseHandler(DiContainer container)
-        {
+        public PauseHandler(DiContainer container) =>
             this.container = container;
-        }
+
         public void Initialize()
         {
-            IEnumerable<IPauseListener> diListeners = (IEnumerable<IPauseListener>)container.GetDependencyContracts<IPauseListener>();
+            IList<IPauseListener> contracts = container.ResolveAll<IPauseListener>();
 
-            foreach (var listener in diListeners)
+            for (int i = 0; i < contracts.Count; i++)
             {
-                Register(listener);
+                Register(contracts[i]);
             }
         }
 
@@ -42,13 +41,13 @@ namespace Assets.Scripts.Pause_System
         public void CleanUp() =>
             listeners.Clear();
 
-        public void SetPaused(bool isPaused)
+        public void SetPaused(bool value)
         {
-            IsPaused = isPaused;
+            IsPaused = value;
 
-            foreach (IPauseListener listener in listeners)
+            for (int i = 0; i < listeners.Count; i++)
             {
-                listener.Pause(isPaused);
+                listeners[i].Pause(value);
             }
         }
     }
