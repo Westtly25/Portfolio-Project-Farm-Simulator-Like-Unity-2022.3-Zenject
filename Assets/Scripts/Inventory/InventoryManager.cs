@@ -1,8 +1,8 @@
 using System;
 using Zenject;
 using UnityEngine;
-using System.Collections.Generic;
 using Unity.Collections;
+using System.Collections.Generic;
 
 public class InventoryManager : IInventoryManager, ISaveable, IInitializable, IDisposable
 {
@@ -51,10 +51,8 @@ public class InventoryManager : IInventoryManager, ISaveable, IInitializable, ID
         ISaveableRegister();
     }
 
-    public void Dispose()
-    {
+    public void Dispose() =>
         ISaveableDeregister();
-    }
 
     protected void Setup()
     {
@@ -99,12 +97,8 @@ public class InventoryManager : IInventoryManager, ISaveable, IInitializable, ID
         }
     }
 
-    public void AddItem(InventoryLocation inventoryLocation, Item item, GameObject gameObjectToDelete)
-    {
+    public void AddItem(InventoryLocation inventoryLocation, Item item, GameObject gameObjectToDelete) =>
         AddItem(inventoryLocation, item);
-
-        //Destroy(gameObjectToDelete);
-    }
 
     public void AddItem(InventoryLocation inventoryLocation, Item item)
     {

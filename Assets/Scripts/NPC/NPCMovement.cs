@@ -8,7 +8,6 @@ using UnityEngine.SceneManagement;
 /// Needs refactoring
 /// </summary>
 
-
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(Animator))]
 [RequireComponent(typeof(NPCPath))]
@@ -16,11 +15,17 @@ using UnityEngine.SceneManagement;
 [RequireComponent(typeof(BoxCollider2D))]
 public class NPCMovement : MonoBehaviour
 {
+    [SerializeField]
     public SceneName npcCurrentScene;
-    [HideInInspector] public SceneName npcTargetScene;
-    [HideInInspector] public Vector3Int npcCurrentGridPosition;
-    [HideInInspector] public Vector3Int npcTargetGridPosition;
-    [HideInInspector] public Vector3 npcTargetWorldPosition;
+    [SerializeField]
+    public SceneName npcTargetScene;
+    [SerializeField]
+    public Vector3Int npcCurrentGridPosition;
+    [SerializeField]
+    public Vector3Int npcTargetGridPosition;
+    [SerializeField]
+    public Vector3 npcTargetWorldPosition;
+    [SerializeField]
     public Direction npcFacingDirectionAtDestination;
 
     private SceneName npcPreviousMovementStepScene;
@@ -30,14 +35,18 @@ public class NPCMovement : MonoBehaviour
     [Header("NPC Movement")]
     public float npcNormalSpeed = 2f;
 
-    [SerializeField] private float npcMinSpeed = 1f;
-    [SerializeField] private float npcMaxSpeed = 3f;
+    [SerializeField, Min(0)]
+    private float npcMinSpeed = 1f;
+    [SerializeField, Min(10)]
+    private float npcMaxSpeed = 3f;
     private bool npcIsMoving = false;
 
-    [HideInInspector] public AnimationClip npcTargetAnimationClip;
+    [HideInInspector]
+    public AnimationClip npcTargetAnimationClip;
 
     [Header("NPC Animation")]
-    [SerializeField] private AnimationClip blankAnimation = null;
+    [SerializeField]
+    private AnimationClip blankAnimation = null;
 
     private Grid grid;
     private Rigidbody2D rigidBody2D;
@@ -252,25 +261,14 @@ public class NPCMovement : MonoBehaviour
         sceneLoaded = true;
     }
 
-    private void BeforeSceneUnloaded()
-    {
+    private void BeforeSceneUnloaded() =>
         sceneLoaded = false;
-    }
 
     /// <summary>
     /// returns the grid position given the worldPosition
     /// </summary>
-    private Vector3Int GetGridPosition(Vector3 worldPosition)
-    {
-        if (grid != null)
-        {
-            return grid.WorldToCell(worldPosition);
-        }
-        else
-        {
-            return Vector3Int.zero;
-        }
-    }
+    private Vector3Int GetGridPosition(Vector3 worldPosition) =>
+        (grid != null) ? grid.WorldToCell(worldPosition) : Vector3Int.zero;
 
     /// <summary>
     ///  returns the world position (centre of grid square) from gridPosition
@@ -279,7 +277,6 @@ public class NPCMovement : MonoBehaviour
     {
         Vector3 worldPosition = grid.CellToWorld(gridPosition);
 
-        // Get centre of grid square
         return new Vector3(worldPosition.x + StaticData.gridCellSize / 2f, worldPosition.y + StaticData.gridCellSize / 2f, worldPosition.z);
     }
 
@@ -295,17 +292,13 @@ public class NPCMovement : MonoBehaviour
             StopCoroutine(moveToGridPositionRoutine);
         }
 
-        // Reset move animation
         ResetMoveAnimation();
 
-        // Clear event animation
         ClearNPCEventAnimation();
         npcTargetAnimationClip = null;
 
-        // Reset idle animation
         ResetIdleAnimation();
 
-        // Set idle animation
         SetIdleAnimation();
     }
 
@@ -336,10 +329,8 @@ public class NPCMovement : MonoBehaviour
         npcNextWorldPosition = GetWorldPosition(npcCurrentGridPosition);
     }
 
-    private void MoveToGridPosition(Vector3Int gridPosition, TimeSpan npcMovementStepTime, TimeSpan gameTime)
-    {
+    private void MoveToGridPosition(Vector3Int gridPosition, TimeSpan npcMovementStepTime, TimeSpan gameTime) =>
         moveToGridPositionRoutine = StartCoroutine(MoveToGridPositionRoutine(gridPosition, npcMovementStepTime, gameTime));
-    }
 
     private IEnumerator MoveToGridPositionRoutine(Vector3Int gridPosition, TimeSpan npcMovementStepTime, TimeSpan gameTime)
     {
@@ -381,21 +372,16 @@ public class NPCMovement : MonoBehaviour
 
     private void SetMoveAnimation(Vector3Int gridPosition)
     {
-        // Reset idle animation
         ResetIdleAnimation();
 
-        // Reset move animation
         ResetMoveAnimation();
 
-        // get world position
         Vector3 toWorldPosition = GetWorldPosition(gridPosition);
 
-        // get vector
         Vector3 directionVector = toWorldPosition - transform.position;
 
         if (Mathf.Abs(directionVector.x) >= Mathf.Abs(directionVector.y))
         {
-            // Use left/right animation
             if (directionVector.x > 0)
             {
                 animator.SetBool(StaticData.walkRight, true);
@@ -407,7 +393,6 @@ public class NPCMovement : MonoBehaviour
         }
         else
         {
-            //Use up/down animation
             if (directionVector.y > 0)
             {
                 animator.SetBool(StaticData.walkUp, true);

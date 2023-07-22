@@ -3,7 +3,9 @@
 [System.Serializable]
 public sealed class GridCoordinate
 {
+    [SerializeField]
     private int x;
+    [SerializeField]
     private int y;
 
     public int X => x;

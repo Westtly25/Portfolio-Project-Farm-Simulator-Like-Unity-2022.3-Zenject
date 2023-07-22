@@ -1,4 +1,4 @@
-﻿public enum Season
+﻿public enum Season : byte
 {
     Spring,
     Summer,

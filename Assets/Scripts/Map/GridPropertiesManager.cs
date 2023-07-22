@@ -15,7 +15,7 @@ public class GridPropertiesManager : SingletonMonobehaviour<GridPropertiesManage
     private Grid grid;
     private Dictionary<string, GridPropertyDetails> gridPropertyDictionary;
     [SerializeField] private SO_CropDetailsList so_CropDetailsList = null;
-    [SerializeField] private GridPropertiesContainer[] so_gridPropertiesArray = null;
+    [SerializeField] private GridPropertiesContainer[] gridPropertiesArray = null;
     [SerializeField] private Tile[] dugGround = null;
     [SerializeField] private Tile[] wateredGround = null;
 
@@ -64,15 +64,12 @@ public class GridPropertiesManager : SingletonMonobehaviour<GridPropertiesManage
 
     private void ClearDisplayGroundDecorations()
     {
-        // Remove ground decorations
         groundDecoration1.ClearAllTiles();
         groundDecoration2.ClearAllTiles();
     }
 
     private void ClearDisplayAllPlantedCrops()
     {
-        // Destroy all crops in scene
-
         Crop[] cropArray;
         cropArray = FindObjectsOfType<Crop>();
 
@@ -91,7 +88,6 @@ public class GridPropertiesManager : SingletonMonobehaviour<GridPropertiesManage
 
     public void DisplayDugGround(GridPropertyDetails gridPropertyDetails)
     {
-        // Dug
         if (gridPropertyDetails.DaysSinceDug > -1)
         {
             ConnectDugGround(gridPropertyDetails);
@@ -100,7 +96,6 @@ public class GridPropertiesManager : SingletonMonobehaviour<GridPropertiesManage
 
     public void DisplayWateredGround(GridPropertyDetails gridPropertyDetails)
     {
-        // Watered
         if (gridPropertyDetails.DaysSinceWatered > -1)
         {
             ConnectWateredGround(gridPropertyDetails);
@@ -110,12 +105,8 @@ public class GridPropertiesManager : SingletonMonobehaviour<GridPropertiesManage
 
     private void ConnectDugGround(GridPropertyDetails gridPropertyDetails)
     {
-        // Select tile based on surrounding dug tiles
-
         Tile dugTile0 = SetDugTile(gridPropertyDetails.GridX, gridPropertyDetails.GridY);
         groundDecoration1.SetTile(new Vector3Int(gridPropertyDetails.GridX, gridPropertyDetails.GridY, 0), dugTile0);
-
-        // Set 4 tiles if dug surrounding current tile - up, down, left, right now that this central tile has been dug
 
         GridPropertyDetails adjacentGridPropertyDetails;
 
@@ -149,12 +140,8 @@ public class GridPropertiesManager : SingletonMonobehaviour<GridPropertiesManage
 
     private void ConnectWateredGround(GridPropertyDetails gridPropertyDetails)
     {
-        // Select tile based on surrounding watered tiles
-
         Tile wateredTile0 = SetWateredTile(gridPropertyDetails.GridX, gridPropertyDetails.GridY);
         groundDecoration2.SetTile(new Vector3Int(gridPropertyDetails.GridX, gridPropertyDetails.GridY, 0), wateredTile0);
-
-        // Set 4 tiles if watered surrounding current tile - up, down, left, right now that this central tile has been watered
 
         GridPropertyDetails adjacentGridPropertyDetails;
 
@@ -189,8 +176,6 @@ public class GridPropertiesManager : SingletonMonobehaviour<GridPropertiesManage
 
     private Tile SetDugTile(int xGrid, int yGrid)
     {
-        //Get whether surrounding tiles (up,down,left, and right) are dug or not
-
         bool upDug = IsGridSquareDug(xGrid, yGrid + 1);
         bool downDug = IsGridSquareDug(xGrid, yGrid - 1);
         bool leftDug = IsGridSquareDug(xGrid - 1, yGrid);
@@ -288,8 +273,6 @@ public class GridPropertiesManager : SingletonMonobehaviour<GridPropertiesManage
 
     private Tile SetWateredTile(int xGrid, int yGrid)
     {
-        // Get whether surrounding tiles (up,down,left, and right) are watered or not
-
         bool upWatered = IsGridSquareWatered(xGrid, yGrid + 1);
         bool downWatered = IsGridSquareWatered(xGrid, yGrid - 1);
         bool leftWatered = IsGridSquareWatered(xGrid - 1, yGrid);
@@ -387,7 +370,6 @@ public class GridPropertiesManager : SingletonMonobehaviour<GridPropertiesManage
 
     private void DisplayGridPropertyDetails()
     {
-        // Loop through all grid items
         foreach (KeyValuePair<string, GridPropertyDetails> item in gridPropertyDictionary)
         {
             GridPropertyDetails gridPropertyDetails = item.Value;
@@ -399,23 +381,17 @@ public class GridPropertiesManager : SingletonMonobehaviour<GridPropertiesManage
             DisplayPlantedCrop(gridPropertyDetails);
         }
     }
-
-    /// <summary>
-    /// Display planted crop for gridpropertyDetails
-    /// </summary>
+    
     public void DisplayPlantedCrop(GridPropertyDetails gridPropertyDetails)
     {
         if (gridPropertyDetails.SeedItemCode > -1)
         {
-            // get crop details
             CropDetails cropDetails = so_CropDetailsList.GetCropDetails(gridPropertyDetails.SeedItemCode);
 
             if (cropDetails != null)
             {
-                // prefab to use
                 GameObject cropPrefab;
 
-                // instantiate crop prefab at grid location
                 int growthStages = cropDetails.growthDays.Length;
 
                 int currentGrowthStage = 0;
@@ -448,20 +424,13 @@ public class GridPropertiesManager : SingletonMonobehaviour<GridPropertiesManage
     }
 
 
-    /// <summary>
-    /// This initialises the grid property dictionary with the values from the SO_GridProperties assets and stores the values for each scene in
-    /// GameObjectSave sceneData
-    /// </summary>
     private void InitialiseGridProperties()
     {
-        // Loop through all gridproperties in the array
-        foreach (GridPropertiesContainer so_GridProperties in so_gridPropertiesArray)
+        foreach (GridPropertiesContainer gridProperties in gridPropertiesArray)
         {
-            // Create dictionary of grid property details
             Dictionary<string, GridPropertyDetails> gridPropertyDictionary = new Dictionary<string, GridPropertyDetails>();
 
-            // Populate grid property dictionary - Iterate through all the grid properties in the so gridproperties list
-            foreach (GridProperty gridProperty in so_GridProperties.gridPropertyList)
+            foreach (GridProperty gridProperty in gridProperties.Properties)
             {
                 GridPropertyDetails gridPropertyDetails;
 
@@ -501,25 +470,20 @@ public class GridPropertiesManager : SingletonMonobehaviour<GridPropertiesManage
                 SetGridPropertyDetails(gridProperty.gridCoordinate.X, gridProperty.gridCoordinate.Y, gridPropertyDetails, gridPropertyDictionary);
             }
 
-            // Create scene save for this gameobject
             SceneSave sceneSave = new SceneSave();
 
-            // Add grid property dictionary to scene save data
             sceneSave.gridPropertyDetailsDictionary = gridPropertyDictionary;
 
-            // If starting scene set the gridPropertyDictionary member variable to the current iteration
-            if (so_GridProperties.SceneName.ToString() == SceneControllerManager.Instance.startingSceneName.ToString())
+            if (gridProperties.SceneName.ToString() == SceneControllerManager.Instance.startingSceneName.ToString())
             {
                 this.gridPropertyDictionary = gridPropertyDictionary;
             }
 
-            // Add bool dictionary and set first time scene loaded to true
             sceneSave.boolDictionary = new Dictionary<string, bool>();
             sceneSave.boolDictionary.Add("isFirstTimeSceneLoaded", true);
 
 
-            // Add scene save to game object scene data
-            GameObjectSave.sceneData.Add(so_GridProperties.SceneName.ToString(), sceneSave);
+            GameObjectSave.sceneData.Add(gridProperties.SceneName.ToString(), sceneSave);
         }
     }
 
@@ -537,29 +501,21 @@ public class GridPropertiesManager : SingletonMonobehaviour<GridPropertiesManage
 
 
 
-        // Get Grid
         grid = GameObject.FindObjectOfType<Grid>();
 
-        // Get tilemaps
         groundDecoration1 = GameObject.FindGameObjectWithTag(Tags.GroundDecoration1).GetComponent<Tilemap>();
         groundDecoration2 = GameObject.FindGameObjectWithTag(Tags.GroundDecoration2).GetComponent<Tilemap>();
 
     }
 
-    /// <summary>
-    /// Returns the gridPropertyDetails at the gridlocation for the supplied dictionary, or null if no properties exist at that location.
-    /// </summary>
     public GridPropertyDetails GetGridPropertyDetails(int gridX, int gridY, Dictionary<string, GridPropertyDetails> gridPropertyDictionary)
     {
-        // Construct key from coordinate
         string key = "x" + gridX + "y" + gridY;
 
         GridPropertyDetails gridPropertyDetails;
 
-        // Check if grid property details exist forcoordinate and retrieve
         if (!gridPropertyDictionary.TryGetValue(key, out gridPropertyDetails))
         {
-            // if not found
             return null;
         }
         else
@@ -568,15 +524,11 @@ public class GridPropertiesManager : SingletonMonobehaviour<GridPropertiesManage
         }
     }
 
-    /// <summary>
-    ///  Returns the Crop object at the gridX, gridY position or null if no crop was found
-    /// </summary>
     public Crop GetCropObjectAtGridLocation(GridPropertyDetails gridPropertyDetails)
     {
         Vector3 worldPosition = grid.GetCellCenterWorld(new Vector3Int(gridPropertyDetails.GridX, gridPropertyDetails.GridY, 0));
         Collider2D[] collider2DArray = Physics2D.OverlapPointAll(worldPosition);
 
-        // Loop through colliders to get crop game object
         Crop crop = null;
 
         for (int i = 0; i < collider2DArray.Length; i++)
@@ -592,41 +544,27 @@ public class GridPropertiesManager : SingletonMonobehaviour<GridPropertiesManage
         return crop;
     }
 
-    /// <summary>
-    /// Returns Crop Details for the provided seedItemCode
-    /// </summary>
-    public CropDetails GetCropDetails(int seedItemCode)
-    {
-        return so_CropDetailsList.GetCropDetails(seedItemCode);
-    }
+  
+    public CropDetails GetCropDetails(int seedItemCode) =>
+        so_CropDetailsList.GetCropDetails(seedItemCode);
 
-
-
-    /// <summary>
-    /// Get the grid property details for the tile at (gridX,gridY).  If no grid property details exist null is returned and can assume that all grid property details values are null or false
-    /// </summary>
     public GridPropertyDetails GetGridPropertyDetails(int gridX, int gridY) => 
         GetGridPropertyDetails(gridX, gridY, gridPropertyDictionary);
-
-    /// <summary>
-    /// for sceneName this method returns a Vector2Int with the grid dimensions for that scene, or Vector2Int.zero if scene not found
-    /// </summary>
 
     public bool GetGridDimensions(SceneName sceneName, out Vector2Int gridDimensions, out Vector2Int gridOrigin)
     {
         gridDimensions = Vector2Int.zero;
         gridOrigin = Vector2Int.zero;
 
-        // loop through scenes
-        foreach (GridPropertiesContainer so_GridProperties in so_gridPropertiesArray)
+        foreach (GridPropertiesContainer gidProperties in gridPropertiesArray)
         {
-            if (so_GridProperties.SceneName == sceneName)
+            if (gidProperties.SceneName == sceneName)
             {
-                gridDimensions.x = so_GridProperties.gridWidth;
-                gridDimensions.y = so_GridProperties.gridHeight;
+                gridDimensions.x = gidProperties.gridWidth;
+                gridDimensions.y = gidProperties.gridHeight;
 
-                gridOrigin.x = so_GridProperties.originX;
-                gridOrigin.y = so_GridProperties.originY;
+                gridOrigin.x = gidProperties.originY;
+                gridOrigin.y = gidProperties.originY;
 
                 return true;
             }
@@ -648,7 +586,6 @@ public class GridPropertiesManager : SingletonMonobehaviour<GridPropertiesManage
         {
             GameObjectSave = gameObjectSave;
 
-            // Restore data for current scene
             ISaveableRestoreScene(SceneManager.GetActiveScene().name);
         }
     }
@@ -661,43 +598,27 @@ public class GridPropertiesManager : SingletonMonobehaviour<GridPropertiesManage
 
     public void ISaveableRestoreScene(string sceneName)
     {
-        // Get sceneSave for scene - it exists since we created it in initialise
         if (GameObjectSave.sceneData.TryGetValue(sceneName, out SceneSave sceneSave))
         {
-            // get grid property details dictionary - it exists since we created it in initialise
             if (sceneSave.gridPropertyDetailsDictionary != null)
-            {
                 gridPropertyDictionary = sceneSave.gridPropertyDetailsDictionary;
-            }
 
-            // get dictionary of bools - it exists since we created it in initialise
             if (sceneSave.boolDictionary != null && sceneSave.boolDictionary.TryGetValue("isFirstTimeSceneLoaded", out bool storedIsFirstTimeSceneLoaded))
-            {
                 isFirstTimeSceneLoaded = storedIsFirstTimeSceneLoaded;
-            }
 
-            // Instantiate any crop prefabs initially present in the scene
             if (isFirstTimeSceneLoaded)
                 EventHandler.CallInstantiateCropPrefabsEvent();
 
 
-            // If grid properties exist
             if (gridPropertyDictionary.Count > 0)
             {
-                // grid property details found for the current scene destroy existing ground decoration
                 ClearDisplayGridPropertyDetails();
 
-                // Instantiate grid property details for current scene
                 DisplayGridPropertyDetails();
             }
 
-            // Update first time scene loaded bool
             if (isFirstTimeSceneLoaded == true)
-            {
                 isFirstTimeSceneLoaded = false;
-            }
-
-
         }
     }
 
@@ -712,56 +633,40 @@ public class GridPropertiesManager : SingletonMonobehaviour<GridPropertiesManage
 
     public void ISaveableStoreScene(string sceneName)
     {
-        // Remove sceneSave for scene
         GameObjectSave.sceneData.Remove(sceneName);
 
-        // Create sceneSave for scene
         SceneSave sceneSave = new SceneSave();
 
-        // create & add dict grid property details dictionary
         sceneSave.gridPropertyDetailsDictionary = gridPropertyDictionary;
 
-        // create & add bool dictionary for first time scene loaded
         sceneSave.boolDictionary = new Dictionary<string, bool>();
         sceneSave.boolDictionary.Add("isFirstTimeSceneLoaded", isFirstTimeSceneLoaded);
 
-        // Add scene save to game object scene data
         GameObjectSave.sceneData.Add(sceneName, sceneSave);
     }
 
-    /// <summary>
-    /// Set the grid property details to gridPropertyDetails for the tile at (gridX,gridY) for current scene
-    /// </summary>
     public void SetGridPropertyDetails(int gridX, int gridY, GridPropertyDetails gridPropertyDetails)
     {
         SetGridPropertyDetails(gridX, gridY, gridPropertyDetails, gridPropertyDictionary);
     }
 
-    /// <summary>
-    /// Set the grid property details to gridPropertyDetails for the tile at (gridX,gridY) for the gridpropertyDictionary.
-    /// </summary>
     public void SetGridPropertyDetails(int gridX, int gridY, GridPropertyDetails gridPropertyDetails, Dictionary<string, GridPropertyDetails> gridPropertyDictionary)
     {
-        // Construct key from coordinate
         string key = "x" + gridX + "y" + gridY;
 
         gridPropertyDetails.GridX = gridX;
         gridPropertyDetails.GridY = gridY;
 
-        // Set value
         gridPropertyDictionary[key] = gridPropertyDetails;
     }
 
     private void AdvanceDay(int gameYear, Season gameSeason, int gameDay, string gameDayOfWeek, int gameHour, int gameMinute, int gameSecond)
     {
-        // Clear Display All Grid Property Details
         ClearDisplayGridPropertyDetails();
 
-        // Loop through all scenes - by looping through all gridproperties in the array
-        foreach (GridPropertiesContainer so_GridProperties in so_gridPropertiesArray)
+        foreach (GridPropertiesContainer gridProperties in gridPropertiesArray)
         {
-            // Get gridpropertydetails dictionary for scene
-            if (GameObjectSave.sceneData.TryGetValue(so_GridProperties.SceneName.ToString(), out SceneSave sceneSave))
+            if (GameObjectSave.sceneData.TryGetValue(gridProperties.SceneName.ToString(), out SceneSave sceneSave))
             {
                 if (sceneSave.gridPropertyDetailsDictionary != null)
                 {
@@ -773,19 +678,12 @@ public class GridPropertiesManager : SingletonMonobehaviour<GridPropertiesManage
 
                         #region Update all grid properties to reflect the advance in the day
 
-                        // If a crop is planted
                         if (gridPropertyDetails.GrowthDays > -1)
-                        {
                             gridPropertyDetails.GrowthDays += 1;
-                        }
 
-                        // If ground is watered, then clear water
                         if (gridPropertyDetails.DaysSinceWatered > -1)
-                        {
                             gridPropertyDetails.DaysSinceWatered = -1;
-                        }
 
-                        // Set gridpropertydetails
                         SetGridPropertyDetails(gridPropertyDetails.GridX, gridPropertyDetails.GridY, gridPropertyDetails, sceneSave.gridPropertyDetailsDictionary);
 
                         #endregion Update all grid properties to reflect the advance in the day
@@ -794,7 +692,6 @@ public class GridPropertiesManager : SingletonMonobehaviour<GridPropertiesManage
             }
         }
 
-        // Display grid property details to reflect changed values
         DisplayGridPropertyDetails();
     }
 }

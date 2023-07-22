@@ -2,9 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-/// <summary>
-/// Attach to a crop prefab to set the values in the grid property dictionary
-/// </summary>
 public class CropInstantiator : MonoBehaviour
 {
     private Grid grid;
@@ -26,16 +23,12 @@ public class CropInstantiator : MonoBehaviour
 
     private void InstantiateCropPrefabs()
     {
-        // Get grid gameobject
         grid = GameObject.FindObjectOfType<Grid>();
 
-        // Get grid position for crop
         Vector3Int cropGridPosition = grid.WorldToCell(transform.position);
 
-        // Set Crop Grid Properties
         SetCropGridProperties(cropGridPosition);
 
-        // Destroy this gameobject
         Destroy(gameObject);
     }
 
@@ -59,8 +52,6 @@ public class CropInstantiator : MonoBehaviour
             gridPropertyDetails.GrowthDays = growthDays;
 
             GridPropertiesManager.Instance.SetGridPropertyDetails(cropGridPosition.x, cropGridPosition.y, gridPropertyDetails);
-
         }
     }
-
 }

@@ -22,8 +22,6 @@ public class GameClock : MonoBehaviour
 
     private void UpdateGameTime(int gameYear, Season gameSeason, int gameDay, string gameDayOfWeek, int gameHour, int gameMinute, int gameSecond)
     {
-        // Update time
-
         gameMinute = gameMinute - (gameMinute % 10);
 
         string ampm = "";

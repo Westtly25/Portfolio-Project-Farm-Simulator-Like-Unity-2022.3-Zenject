@@ -2,7 +2,7 @@
 
 namespace Project.Inventory
 {
-    public interface IInventoryReadContext
+    public interface IInventoryRead
     {
         InventoryItem GetItem(Guid id);
         InventoryItem[] GetItems();

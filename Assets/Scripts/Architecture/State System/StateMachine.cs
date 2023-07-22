@@ -15,13 +15,13 @@ namespace Assets.Scripts.Architecture.State_System
         private readonly List<Transition> anyTransitions = new(6);
         private readonly List<Transition> transitions = new(6);
 
-        private bool _isStatesAdded;
+        private bool isStatesAdded;
 
         public StateMachine() { }
 
         public void AddStates(params State[] states)
         {
-            if (_isStatesAdded)
+            if (isStatesAdded)
             {
                 throw new Exception("States already added!");
             }
@@ -38,14 +38,12 @@ namespace Assets.Scripts.Architecture.State_System
 
             if (states.Length > 0)
             {
-                _isStatesAdded = true;
+                isStatesAdded = true;
             }
         }
 
-        public void SetState<TState>() where TState : State
-        {
+        public void SetState<TState>() where TState : State => 
             SetState(typeof(TState));
-        }
 
         public void AddTransition<TStateFrom, TStateTo>(Func<bool> condition)
             where TStateFrom : State
@@ -90,10 +88,8 @@ namespace Assets.Scripts.Architecture.State_System
             SetState(CurrentTransition.To.GetType());
         }
 
-        public TState GetState<TState>() where TState : State
-        {
-            return (TState)GetState(typeof(TState));
-        }
+        public TState GetState<TState>() where TState : State =>
+            (TState)GetState(typeof(TState));
 
         private State GetState(Type type)
         {

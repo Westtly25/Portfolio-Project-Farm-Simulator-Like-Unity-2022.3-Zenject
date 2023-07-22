@@ -15,10 +15,8 @@ public class NPCPath : MonoBehaviour
         npcMovementStepStack = new Stack<NPCMovementStep>();
     }
 
-    public void ClearPath()
-    {
+    public void ClearPath() =>
         npcMovementStepStack.Clear();
-    }
 
     public void BuildPath(NPCScheduleEvent npcScheduleEvent)
     {
@@ -123,7 +121,8 @@ public class NPCPath : MonoBehaviour
   
     private bool MovementIsDiagonal(NPCMovementStep npcMovementStep, NPCMovementStep previousNPCMovementStep)
     {
-        if ((npcMovementStep.GridCoordinate.x != previousNPCMovementStep.GridCoordinate.x) && (npcMovementStep.GridCoordinate.y != previousNPCMovementStep.GridCoordinate.y))
+        if ((npcMovementStep.GridCoordinate.x != previousNPCMovementStep.GridCoordinate.x) &&
+            (npcMovementStep.GridCoordinate.y != previousNPCMovementStep.GridCoordinate.y))
         {
             return true;
         }

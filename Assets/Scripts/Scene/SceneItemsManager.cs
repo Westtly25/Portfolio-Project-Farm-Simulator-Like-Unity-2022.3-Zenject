@@ -1,13 +1,14 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+using System.Collections.Generic;
 using UnityEngine.SceneManagement;
-
 
 [RequireComponent(typeof(GenerateGUID))]
 public class SceneItemsManager : SingletonMonobehaviour<SceneItemsManager>, ISaveable
 {
     private Transform parentItem;
-    [SerializeField] private GameObject itemPrefab = null;
+
+    [SerializeField]
+    private GameObject itemPrefab = null;
 
     private string _iSaveableUniqueID;
     public string ISaveableUniqueID { get { return _iSaveableUniqueID; } set { _iSaveableUniqueID = value; } }
@@ -28,15 +29,10 @@ public class SceneItemsManager : SingletonMonobehaviour<SceneItemsManager>, ISav
         GameObjectSave = new GameObjectSave();
     }
 
-    /// <summary>
-    /// Destroy items currently in the scene
-    /// </summary>
     private void DestroySceneItems()
     {
-        // Get all items in the scene
         Item[] itemsInScene = GameObject.FindObjectsOfType<Item>();
 
-        // Loop through all scene items and destroy them
         for (int i = itemsInScene.Length - 1; i > -1; i--)
         {
             Destroy(itemsInScene[i].gameObject);
@@ -87,7 +83,6 @@ public class SceneItemsManager : SingletonMonobehaviour<SceneItemsManager>, ISav
         {
             GameObjectSave = gameObjectSave;
 
-            // Restore data for current scene
             ISaveableRestoreScene(SceneManager.GetActiveScene().name);
         }
     }
@@ -100,10 +95,8 @@ public class SceneItemsManager : SingletonMonobehaviour<SceneItemsManager>, ISav
         {
             if (sceneSave.listSceneItem != null)
             {
-                // scene list items found - destroy existing items in scene
                 DestroySceneItems();
 
-                // now instantiate the list of scene items
                 InstantiateSceneItems(sceneSave.listSceneItem);
             }
         }
@@ -116,7 +109,6 @@ public class SceneItemsManager : SingletonMonobehaviour<SceneItemsManager>, ISav
 
     public GameObjectSave ISaveableSave()
     {
-        // Store current scene data
         ISaveableStoreScene(SceneManager.GetActiveScene().name);
 
         return GameObjectSave;
@@ -126,14 +118,11 @@ public class SceneItemsManager : SingletonMonobehaviour<SceneItemsManager>, ISav
 
     public void ISaveableStoreScene(string sceneName)
     {
-        // Remove old scene save for gameObject if exists
         GameObjectSave.sceneData.Remove(sceneName);
 
-        // Get all items in the scene
         List<SceneItem> sceneItemList = new List<SceneItem>();
         Item[] itemsInScene = FindObjectsOfType<Item>();
 
-        // Loop through all scene items
         foreach (Item item in itemsInScene)
         {
             SceneItem sceneItem = new SceneItem();
@@ -141,15 +130,12 @@ public class SceneItemsManager : SingletonMonobehaviour<SceneItemsManager>, ISav
             sceneItem.position = new Vector3Serializable(item.transform.position.x, item.transform.position.y, item.transform.position.z);
             sceneItem.itemName = item.name;
 
-            // Add scene item to list
             sceneItemList.Add(sceneItem);
         }
 
-        // Create list scene items in scene save and set to scene item list
         SceneSave sceneSave = new SceneSave();
         sceneSave.listSceneItem = sceneItemList;
 
-        // Add scene save to gameobject
         GameObjectSave.sceneData.Add(sceneName, sceneSave);
     }
 }

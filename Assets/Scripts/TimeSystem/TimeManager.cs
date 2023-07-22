@@ -4,21 +4,11 @@ using UnityEngine;
 using System.Collections.Generic;
 using Assets.Scripts.Pause_System;
 
-public enum DayOfWeek : byte
+[Serializable]
+public sealed class TimeManager : ISaveable, IPauseListener, ITickable, IInitializable, IDisposable
 {
-    Mon,
-    Tue,
-    Wed,
-    Thu,
-    Fri,
-    Sat,
-    Sun
-}
-
-public class TimeManager : SingletonMonobehaviour<TimeManager>, ISaveable, IPauseListener, ITickable
-{
-    private int gameYear = 1;
     private Season gameSeason = Season.Spring;
+    private int gameYear = 1;
     private int gameDay = 1;
     private int gameHour = 6;
     private int gameMinute = 30;
@@ -26,8 +16,6 @@ public class TimeManager : SingletonMonobehaviour<TimeManager>, ISaveable, IPaus
     private string gameDayOfWeek = "Mon";
 
     private DayOfWeek day;
-
-    private bool gameClockPaused = false;
 
     private float gameTick = 0f;
 
@@ -53,60 +41,27 @@ public class TimeManager : SingletonMonobehaviour<TimeManager>, ISaveable, IPaus
         this.pauseHandler = pauseHandler;
     }
 
-    public void Initialized()
+    public void Initialize()
     {
-
-    }
-
-    protected override void Awake()
-    {
-        base.Awake();
-
-        ISaveableUniqueID = GetComponent<GenerateGUID>().GUID;
+        ISaveableUniqueID = Guid.NewGuid().ToString();
         GameObjectSave = new GameObjectSave();
-    }
 
-    private void OnEnable()
-    {
         ISaveableRegister();
 
-        EventHandler.BeforeSceneUnloadEvent += BeforeSceneUnloadFadeOut;
-        EventHandler.AfterSceneLoadEvent += AfterSceneLoadFadeIn;
-    }
-
-    private void OnDisable()
-    {
-        ISaveableDeregister();
-
-        EventHandler.BeforeSceneUnloadEvent -= BeforeSceneUnloadFadeOut;
-        EventHandler.AfterSceneLoadEvent -= AfterSceneLoadFadeIn;
-    }
-
-    private void BeforeSceneUnloadFadeOut()
-    {
-        gameClockPaused = true;
-    }
-
-    private void AfterSceneLoadFadeIn()
-    {
-        gameClockPaused = false;
-    }
-
-
-    private void Start()
-    {
         EventHandler.CallAdvanceGameMinuteEvent(gameYear, gameSeason, gameDay, gameDayOfWeek, gameHour, gameMinute, gameSecond);
     }
 
-    private void Update()
+    public void Dispose()
+    {
+        ISaveableDeregister();
+    }
+
+    public void Tick()
     {
         if (pauseHandler.IsPaused)
             return;
 
-        if (!gameClockPaused)
-        {
             GameTick();
-        }
     }
 
     private void GameTick()
@@ -176,8 +131,6 @@ public class TimeManager : SingletonMonobehaviour<TimeManager>, ISaveable, IPaus
             EventHandler.CallAdvanceGameMinuteEvent(gameYear, gameSeason, gameDay, gameDayOfWeek, gameHour, gameMinute, gameSecond);
 
         }
-
-        // Call to advance game second event would go here if required
     }
 
     private string GetDayOfWeek()
@@ -201,15 +154,10 @@ public class TimeManager : SingletonMonobehaviour<TimeManager>, ISaveable, IPaus
     public TimeSpan GetGameTime() =>
         new TimeSpan(gameHour, gameMinute, gameSecond);
 
-    public void ISaveableRegister()
-    {
+    public void ISaveableRegister() =>
         SaveLoadManager.Instance.iSaveableObjectList.Add(this);
-    }
-
-    public void ISaveableDeregister()
-    {
+    public void ISaveableDeregister() =>
         SaveLoadManager.Instance.iSaveableObjectList.Remove(this);
-    }
 
     public GameObjectSave ISaveableSave()
     {
@@ -278,6 +226,7 @@ public class TimeManager : SingletonMonobehaviour<TimeManager>, ISaveable, IPaus
             }
         }
     }
+
     public void ISaveableStoreScene(string sceneName)
     {
     }
@@ -288,13 +237,5 @@ public class TimeManager : SingletonMonobehaviour<TimeManager>, ISaveable, IPaus
 
     public void Pause(bool isPaused)
     {
-    }
-
-    public void Tick()
-    {
-        if (pauseHandler.IsPaused)
-            return;
-
-            GameTick();
     }
 }
