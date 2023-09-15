@@ -7,7 +7,7 @@
     <li>2. Zenject integration in progress</li>
     <li>3. Refactoring in progress</li>
   </ul>
-## Technology stack : 
+## Technology stack
 <ul>
   <li>Zenject</li>
   <li>UniTask</li>
